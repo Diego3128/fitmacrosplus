@@ -1,0 +1,48 @@
+@use "../base/variables" as v;
+/* container styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    /* tooltip text */
+    .tooltip-text {
+        visibility: hidden; 
+        width: auto; 
+        background-color: v.$color-gray-dark; 
+        color: v.$color-white; 
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 1.3rem;
+
+        /* Posición relativa al elemento */
+        position: absolute;
+        z-index: 10;
+        top: 125%; /* move below the button */
+        left: 50%;
+        transform: translateX(-50%);
+
+        /* tooltip arrow */
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 100%; /* over the tooltip */
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: v.$color-gray-dark transparent transparent transparent; 
+        }
+
+        /* transition effect */
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    /* show when hover */
+    &:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+}

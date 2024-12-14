@@ -1,0 +1,22 @@
+{
+    "name": "diegoperez/fitplus",
+    "description": "php8, sql, gulp, scss, javascript, mvc, active record",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Model\\": "./models",
+            "Controller\\": "./controllers",
+            "Controller\\Auth\\": "./controllers/auth/",
+            "MVC\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "DiegoFabian",
+            "email": "145170018+Diego3128@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

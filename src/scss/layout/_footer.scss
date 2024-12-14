@@ -1,0 +1,66 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+/* Estilos generales del footer */
+.footer {
+    background-color: v.$color-black-light;
+    color: v.$color-white;
+    padding: 6rem 3rem;
+    text-align: center;
+
+    .footer-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+        margin: 0 auto;
+    
+        @include m.respond-to(tablet){
+            grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      .footer-title{
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        color: v.$color-primary;
+      }
+      
+      .footer p,
+      .footer ul,
+      .footer a {
+        font-size: 1.4rem;
+        line-height: 1.5;
+      }
+      
+      .footer a {
+        color: v.$color-white;
+        text-decoration: none;
+      }
+      
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-links li {
+        margin: 0.5rem 0;
+      }
+      
+      
+      /* Sección inferior del footer */
+      .footer-bottom {
+        margin-top: 6rem;
+        border-top: 1px solid v.$color-gray;
+        padding-top: 1rem;
+        font-size: 1.2rem;
+        color: v.$color-gray;
+      }
+      
+  }
+  
+
+  

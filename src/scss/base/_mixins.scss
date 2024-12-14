@@ -1,0 +1,101 @@
+@use 'variables' as v;
+
+/** Media Queries **/
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == phone {
+    @media (min-width: v.$breakpoint-phone) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (min-width: v.$breakpoint-tablet) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: v.$breakpoint-desktop) { @content; }
+  } @else if $breakpoint == desktopLarge {
+    @media (min-width: v.$breakpoint-desktop-large) { @content; }
+  }
+}
+
+// @include respond-to(phone) { ... }
+
+/** Buttons **/
+@mixin btn(
+  $bg: v.$color-black,
+  $color: v.$color-white,
+  $padding: 1.2rem 2rem,
+  $radius: v.$border-radius-md
+) {
+  display: inline-block;
+  padding: $padding;
+  color: $color;
+  background: $bg;
+  border: none;
+  border-radius: $radius;
+  text-align: center;
+  font-weight: v.$font-bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+/** Grid **/
+@mixin grid($columns: 2, $gap: v.$spacing-lg, $row-gap: null) {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: repeat($columns, 1fr);
+
+  @if $row-gap {
+    row-gap: $row-gap;
+  }
+}
+
+/** Flexbox **/
+@mixin flex(
+  $align: center,
+  $justify: center,
+  $direction: row
+) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}
+
+/** Typography **/
+@mixin text-style(
+  $size: 1.6rem,
+  $weight: v.$font-regular,
+  $color: v.$color-black
+) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  line-height: 1.5;
+}
+
+/** Border Radius **/
+@mixin rounded($radius: v.$border-radius-md) {
+  border-radius: $radius;
+}
+
+/** Shadows **/
+@mixin shadow($type: "default") {
+  @if $type == "default" {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  } @else if $type == "strong" {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  } @else if $type == "light" {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/** Container **/
+@mixin container($max-width: v.$container-lg, $padding: v.$spacing-md) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $padding;
+}

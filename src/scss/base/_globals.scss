@@ -1,0 +1,183 @@
+@use 'variables' as v;
+
+// =====================
+// GLOBAL STYLES
+// =====================
+
+// Reset y Box Sizing
+*, *:before, *:after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%; // 1rem = 10px
+    height: 100%;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: v.$color-white;
+    color: v.$color-black-secondary;
+    font-family: v.$main-font;
+    font-size: 1.6rem; // Base font size
+    line-height: 1.6; //
+    overflow-x: hidden;
+}
+
+.container {
+    width: 95%;
+    max-width: v.$container-max-width;
+    margin: 0 auto;
+    padding: 0 v.$container-padding;
+}
+
+img, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+        opacity: 0.8; 
+    }
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+input, textarea, select, button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+// =====================
+// utils
+// =====================
+
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+.m-0 { margin: 0; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.p-0 { padding: 0; }
+.pt-0 { padding-top: 0; }
+.pb-0 { padding-bottom: 0; }
+
+.m-auto { margin: auto; }
+.mt-auto { margin-top: auto; }
+.mb-auto { margin-bottom: auto; }
+
+.p-sm { padding: v.$spacing-sm; }
+.p-md { padding: v.$spacing-md; }
+.p-lg { padding: v.$spacing-lg; }
+.p-xl { padding: v.$spacing-xl; }
+
+// Flexbox
+.flex {
+    display: flex;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// Display Utilities
+.d-block {
+    display: block;
+}
+.d-inline {
+    display: inline;
+}
+.d-inline-block {
+    display: inline-block;
+}
+.d-none {
+    display: none;
+}
+
+// font sizes
+.text-xs { font-size: v.$font-size-xs; }
+.text-sm { font-size: v.$font-size-sm; }
+.text-md { font-size: v.$font-size-md; }
+.text-lg { font-size: v.$font-size-lg; }
+.text-xl { font-size: v.$font-size-xl; }
+.text-xxl { font-size: v.$font-size-xxl; }
+
+// Bordes
+.rounded {
+    border-radius: v.$border-radius-md;
+}
+.rounded-sm {
+    border-radius: v.$border-radius-sm;
+}
+.rounded-lg {
+    border-radius: v.$border-radius-lg;
+}
+
+// shadow
+.shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// =====================
+// ANIMATIONS AND EFFECTS
+// =====================
+
+// Global transitions
+.transition {
+    transition: all v.$transition-base;
+}
+
+// =====================
+// OTHERS
+// =====================
+
+// Scroll
+.scroll-y {
+    overflow-y: scroll;
+}
+.scroll-x {
+    overflow-x: scroll;
+}
+.no-scroll {
+    overflow: hidden;
+}

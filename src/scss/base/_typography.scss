@@ -1,0 +1,148 @@
+@use 'variables' as v;
+// =====================
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: v.$main-font;
+    font-weight: v.$font-bold;
+    color: v.$color-black;
+    line-height: 1.2; 
+    margin-bottom: v.$spacing-md; 
+}
+
+h1 {
+    font-size: 3.2rem;
+}
+
+h2 {
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-size: 2.3rem;
+}
+
+h4 {
+    font-size: 2rem;
+}
+
+h5 {
+    font-size: 1.8rem;
+}
+
+h6 {
+    font-size: 1.6rem;
+}
+
+p {
+    margin-bottom: v.$spacing-md; 
+}
+
+small {
+    font-size: 1.2rem;
+}
+
+
+
+// =====================
+// CLASES UTILITARIAS
+// =====================
+
+// Tamaños de fuente
+.text-sm {
+    font-size: v.$font-size-sm;
+}
+
+.text-md {
+    font-size: v.$font-size-md;
+}
+
+.text-lg {
+    font-size: v.$font-size-lg;
+}
+
+.text-xl {
+    font-size: v.$font-size-xl;
+}
+
+.text-xxl {
+    font-size: v.$font-size-xxl;
+}
+
+// Peso de la fuente
+.text-thin {
+    font-weight: v.$font-thin;
+}
+
+.text-regular {
+    font-weight: v.$font-regular;
+}
+
+.text-bold {
+    font-weight: v.$font-bold;
+}
+
+.text-black {
+    font-weight: v.$font-black;
+}
+
+// Alineación de texto
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+// Estilo de texto
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-lowercase {
+    text-transform: lowercase;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.line-clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    &-2 {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+    &-3 {
+        -webkit-line-clamp: 3;
+        line-clamp: 2;
+
+    }
+    &-4 {
+        -webkit-line-clamp: 4;
+        line-clamp: 2;
+
+    }
+}

@@ -1,0 +1,83 @@
+// =====================
+// PROJECT VARIABLES
+// =====================
+
+// Typography
+$main-font: 'Poppins', sans-serif; // Main font
+$secondary-font: 'Roboto', sans-serif; // Secondary Font
+
+// font weights
+$font-thin: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+$font-black: 900;
+
+// Main colors
+$color-primary: #ffd700; // Amarillo principal
+$color-primary-light: #ffe566; // Amarillo claro
+$color-primary-dark: #cca300; // Amarillo oscuro
+
+// Secondary colors
+$color-black: #000000; 
+$color-black-secondary: #0a0a0a; 
+$color-black-light: #333333; 
+$color-white: #f8f8f8; 
+$color-gray: #e1e1e1; 
+$color-gray-dark: #666666; 
+$color-red: #e63946;
+
+$color-accent: #FFD700; // Amarillo brillante (Gold)
+$color-accent-dark: #E6BE00; // Amarillo oscuro
+
+// Gradients
+$gradient-primary: linear-gradient(90deg, $color-primary, $color-primary-dark);
+$gradient-neutral: linear-gradient(90deg, $color-gray, $color-white);
+
+// Breakpoint
+$breakpoint-phone: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-large: 1200px;
+$breakpoint-desktop-extra-large: 1440px; 
+
+//(Padding & Margins)
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+$spacing-xxxl: 60px;
+
+
+// font sizes
+$font-size-xs: 1.2rem;
+$font-size-sm: 1.4rem;
+$font-size-md: 1.6rem; // Base
+$font-size-lg: 2.0rem;
+$font-size-xl: 2.4rem;
+$font-size-xxl: 3.2rem;
+$font-size-xxxl: 4.8rem;
+
+// container sizes
+$container-max-width: 1200px;
+$container-padding: 16px;
+
+// others
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+$transition-base: 0.3s ease-in-out;
+
+// =====================
+// EXAMPLE
+// =====================
+$palette: (
+  "yellow": $color-primary,
+  "yellow-light": $color-primary-light,
+  "yellow-dark": $color-primary-dark,
+  "black": $color-black,
+  "gray": $color-gray,
+  "white": $color-white
+);

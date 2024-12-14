@@ -1,0 +1,98 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.navbar {
+  position: fixed; /* Fija el navbar */
+  top: 0;          /* Ubicación: parte superior de la pantalla */
+  left: 0;         /* Ubicación: alineado al lado izquierdo */
+  width: 100%;     /* Ocupa todo el ancho */
+  z-index: 100;
+  background-color: v.$color-black;
+  color: v.$color-white;
+  padding: v.$spacing-sm;
+
+  .container{
+    position: relative;
+    justify-content: space-between; 
+  }
+
+  .dropdown-container{
+    position: relative;
+  }
+
+  .logo {
+    &:hover {
+      opacity: 0.85;
+    }
+
+    img{
+        border-radius: v.$border-radius-lg;
+        height: 5rem;
+    }
+  }
+
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-button {
+    font-size: v.$font-size-md;
+    border: none;
+    cursor: pointer;
+    width: 4rem;
+    border-radius: 50%;
+    margin: auto;
+  }
+  .dropdown-button:hover{
+    opacity: .9;
+  }
+  
+  /* hidden content */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: v.$color-white;
+    min-width: 15rem;
+    max-width: 15rem;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    bottom: 0;//height of the element (using js)
+    left: -15rem;
+  }
+  //show content (add class with javascript)
+  .dropdown-content.show{
+    display: block;
+  }
+  .dropdown-content a {
+    color: v.$color-black;
+    padding: v.$spacing-md;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: v.$color-gray;
+  }
+  
+
+  .user-info{
+    position: absolute;
+    top: 5rem;
+    left: -7rem;
+    min-width: 13rem;
+    background: v.$color-black;
+    color: v.$color-gray;
+    border-radius: 0 0 1rem 1rem;
+    max-height: 4rem;
+    overflow: hidden;
+
+    p{
+        text-align: center;
+        margin-bottom: 0;
+        font-size: v.$font-size-xs;
+    }
+  }
+    
+
+
+
+}
