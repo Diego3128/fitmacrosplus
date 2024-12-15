@@ -1,0 +1,48 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+
+/* Estilo base del contenedor */
+.message {
+    width: min(50rem, 80%);
+    margin: 10rem auto;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: v.$main-font;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    @include m.respond-to(tablet){
+    font-size: 2rem;
+    }
+}
+
+
+.message p.success, .message p.error{
+    background-color: v.$color-white;
+    padding: 1rem;
+    border-radius: .6rem;
+    margin: 0;
+    font-weight: v.$font-bold;
+}
+/* Mensaje de éxito */
+.message p.success {
+    color: v.$color-blue;
+}
+
+/* Mensaje de error */
+.message p.error {
+    color: v.$color-red;
+
+}
+
+.message span{
+    display: block;
+}
+
+.message .email{
+    font-size: 1.3rem;
+    @include m.respond-to(tablet){
+        font-size: 2rem;
+        }
+}

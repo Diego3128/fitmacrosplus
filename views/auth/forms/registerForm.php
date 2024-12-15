@@ -6,7 +6,7 @@
         type="text"
         id="name"
         name="user[name]"
-        value="<?php echo $user->name; ?>"
+        value="<?php echo escapeHTML($user->name); ?>"
         placeholder="Ingresa tu nombre"
         required
         maxlength="50"
@@ -17,7 +17,7 @@
         type="text"
         id="lastname"
         name="user[lastname]"
-        value="<?php echo $user->lastname; ?>"
+        value="<?php echo escapeHTML($user->lastname); ?>"
         placeholder="Ingresa tu apellido"
         required maxlength="50"
         minlength="3">
@@ -27,7 +27,7 @@
         type="email"
         id="email"
         name="user[email]"
-        value="<?php echo $user->email; ?>"
+        value="<?php echo escapeHTML($user->email); ?>"
         placeholder="ejemplo@email.com"
         required
         maxlength="80">
@@ -37,7 +37,6 @@
         type="password"
         id="password"
         name="user[password]"
-        value="<?php echo $user->password; ?>"
         placeholder="Crea una contraseña"
         required
         maxlength="50"

@@ -22,6 +22,12 @@ $router->get(url: "/logout", fn: [LoginController::class, "logout"]);
 //create a new account
 $router->get(url: "/register", fn: [LoginController::class, "create"]);
 $router->post(url: "/register", fn: [LoginController::class, "create"]);
+
+//validation message when creating an account
+$router->get(url: "/message", fn: [LoginController::class, "message"]);
+//validate an account with its token
+$router->get(url: "/validate-account", fn: [LoginController::class, "validate"]);
+
 //request create a new password
 $router->get(url: "/password/request", fn: [LoginController::class, "fortgotPassword"]);
 $router->post(url: "/password/request", fn: [LoginController::class, "fortgotPassword"]);

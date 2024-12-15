@@ -2,6 +2,8 @@
 
 namespace Controller\Auth;
 
+use Classes\Email;
+use Exception;
 use Model\Auth\User;
 use MVC\Router;
 
@@ -16,6 +18,7 @@ class LoginController
     {
         echo "logout";
     }
+    //logic when creating a new account
     public static function create(Router $router)
     {
         $user = new User;
@@ -42,8 +45,33 @@ class LoginController
                     $user->hashPassword();
                     //generate a token for email validation
                     $user->generateToken();
-                    //send email with the token
-                    debugAndFormat($user);
+
+                    try {
+                        // throw new Exception("test error when saving in db.");
+
+                        //save user in db
+                        if ($user->save()["result"]) {
+                            //send email with the validation token
+                            try {
+                                // throw new Exception("test error: fails to send the email.");
+                                $email = new Email($user->email, $user->name, $user->token);
+                                if ($email->sendConfirmationEmail()) {
+                                    //redirecto to /message?email=useremail
+                                    header("location: /message?email=" . $user->email);
+                                } else {
+                                    //user saved but the email was not sent
+                                    header("location: /message?email=" . $user->email . "&error=1");
+                                }
+                            } catch (Exception $e) {
+                                //error sending the email
+                                // error_log("Error al enviar email: " . $e->getMessage());
+                                header("location: /message?email=" . $user->email . "&error=1");
+                            }
+                        }
+                    } catch (Exception $e) {
+                        //error saving the new account
+                        $alerts = $user->setAlert("error", "Error al crear cuenta. Intenta más tarde");
+                    }
                 }
             }
         }
@@ -54,6 +82,30 @@ class LoginController
         ];
 
         $router->render("auth/register", $data);
+    }
+    //message after creating a new account
+    public static function message(Router $router)
+    {
+        $user = new User;
+
+        $errorMessage = null;
+
+        $errorCode = $_GET["error"] ?? null;
+
+        $email = $_GET["email"] ?? null;
+
+        //invalid email param will be redirected
+        if (!$email) header("location: /");
+
+        //validate error message
+        if ($errorCode) $errorMessage = getErrorMessage($errorCode);
+
+        $data = [
+            "errorMessage" => $errorMessage,
+            "email" => $email
+        ];
+
+        $router->render("auth/message", $data);
     }
     public static function fortgotPassword()
     {

@@ -22,6 +22,7 @@ abstract class ActiveRecord
     public static function setAlert($type, $message)
     {
         static::$alerts[$type][] = $message;
+        return static::$alerts;
     }
     //validate
     public static function getAlerts(): array
