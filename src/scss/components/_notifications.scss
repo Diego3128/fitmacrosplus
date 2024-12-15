@@ -1,0 +1,68 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+// alerts container
+.alerts-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 110; // over the navbar
+  width: calc(100% - 20px);
+  width: min(40rem, 80%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.alert {
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  color: v.$color-white;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1; // hidden by default
+  transform: translateY(20px);
+
+  @include m.respond-to(tablet){
+    font-size: 1.5rem;
+  }
+
+  &.remove{
+    animation: fadeInOut 2s ease forwards;
+  }
+
+  // depending on the type of alerts a certain color is used
+  &.error {
+    background-color: v.$color-red;
+  }
+
+  &.success {
+    background-color: v.$color-green;
+  }
+
+  &.warning {
+    background-color: v.$color-primary-dark;
+    color: v.$color-black;
+  }
+
+  &.info {
+    background-color: v.$color-blue;
+  }
+}
+
+// Animaciones de entrada y salida
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}

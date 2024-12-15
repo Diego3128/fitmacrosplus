@@ -17,4 +17,3 @@
     <script src='/build/js/modules/navbar.min.js'></script>
     <script src='/build/js/modules/banner.min.js'></script>";
     ?>
-    <!-- create footer -->

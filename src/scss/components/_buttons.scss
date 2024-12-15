@@ -1,0 +1,70 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+
+// submit buttons
+
+.btn-submit {
+    position: relative;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: v.$color-black;
+    font-family: v.$main-font;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn-submit:after {
+    content: " ";
+    width: 0%;
+    height: 100%;
+    background: v.$color-primary;
+    position: absolute;
+    transition: all 0.4s ease-in-out;
+    right: 0;
+  }
+  
+  .btn-submit:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
+  
+  .btn-submit .text {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 2rem 2rem;
+    color: v.$color-white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    z-index: 20;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .btn-submit:hover .text {
+    color: v.$color-black;
+    animation: scaleUp 400ms ease-in-out;
+  }
+  
+
+  @keyframes scaleUp {
+    0% {
+      transform: scale(1);
+    }
+  
+    50% {
+      transform: scale(0.95);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
+  

@@ -1,0 +1,77 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+/* Contenedor principal */
+.form-container {
+    background: v.$color-white;
+    margin: 0 auto 20rem;
+    padding-top: 5rem;
+}
+/* Cabecera del formulario */
+.form-header {
+    background: v.$color-primary;
+    color: v.$color-black;
+    text-align: center;
+    padding:4rem 2rem 3rem;
+    margin-bottom: 3rem;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 2.7rem;
+    font-weight: v.$font-bold;
+}
+
+.form-body {
+    width: min(50rem, 80%);
+    padding: 5rem 2rem;
+    margin: 6rem auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.156);
+    border-radius: 1rem;
+}
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+legend {
+    font-size: 2rem;
+    font-weight: bold;
+    color: v.$color-gray-dark;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    color: v.$color-black;
+}
+
+input {
+    width: 100%;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid v.$color-gray;
+    border-radius: 1rem;
+    font-size: 1.6rem;
+    color: v.$color-black
+}
+
+input:focus {
+    outline: none;
+    border-color: v.$color-black;
+}
+
+/* Botón de envío */
+.form-footer {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.form-options{
+    margin-top: 3rem;
+    text-align: center;
+}

@@ -6,7 +6,7 @@
 
 // Reset y Box Sizing
 *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
