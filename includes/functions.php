@@ -41,7 +41,7 @@ function getErrorMessage($code): string | null
         2 => "Error al crear cuenta, inténtalo de nuevo más tarde",
         3 => "Error de conexión a la base de datos, inténtalo de nuevo más tarde",
         4 => "Error: la solicitud no es válida",
-        5 => "Error: el token de validación no es correcto",
+        5 => "Error: el token de validación no es correcto o ha expirado",
         6 => "Error desconocido, inténtalo de nuevo más tarde"
     ];
 

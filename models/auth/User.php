@@ -60,7 +60,7 @@ class User extends ActiveRecord
         if (strlen($this->lastname) > 50) self::$alerts["error"][] = "El apellido es muy largo. Maximo 50 caracteres";
     }
     //validate email
-    private function validateEmail()
+    public function validateEmail()
     {
         if (!$this->email) {
             self::$alerts["error"][] = "El correo es obligatorio";
@@ -70,10 +70,12 @@ class User extends ActiveRecord
             return self::$alerts["error"][] = "El email es muy largo. Maximo 80 caracteres.";
         }
 
-        if (!preg_match("/^[\w\.\-]+@[a-zA-Z\d\-]+\.[a-zA-Z]{2,}$/", $this->email)) self::$alerts["error"][] = "El formato de correo es invalido";
+        if (!preg_match("/^[\w\.\-]+@[a-zA-Z\d\-]+\.[a-zA-Z]{2,}$/", $this->email) || !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$alerts["error"][] = "El formato de correo es invalido";
+        }
     }
     //validate password
-    private function validatePassword()
+    public function validatePassword()
     {
         if (!$this->password) {
             return self::$alerts["error"][] = "La contraseña es necesaria";
@@ -92,7 +94,7 @@ class User extends ActiveRecord
 
         $this->validateEmail();
 
-        if (!$this->password) self::$alerts["error"][] = "La contraseña es necesaria";
+        $this->validatePassword();
 
         return self::$alerts;
     }
@@ -116,7 +118,7 @@ class User extends ActiveRecord
     //generate token for email validation
     public function generateToken()
     {
-        $this->token = uniqid(prefix: "fitmacros+", more_entropy: true);
+        $this->token = uniqid(prefix: "fitmacrosplus_", more_entropy: true);
     }
     //check if user is verified and if the password matches the hash
     public function checkVerifiedAndPassword($password)

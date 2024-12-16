@@ -46,7 +46,8 @@ abstract class ActiveRecord
 
         $result = self::querySQL($query);
 
-        return array_shift($result);
+        //first position contains the result
+        return array_shift($result) ?? null;
     }
     // plain sql query (used for advanced queries, for instance, joining tables)
     public static function SQL(string $query): array | bool

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     alert.classList.add("remove"); // class to animate the alert
                     resolve();
-                }, 4000);
+                }, 8000);
             });
         }
 

@@ -4,7 +4,6 @@
 .form-container {
     background: v.$color-white;
     margin: 0 auto 20rem;
-    padding-top: 5rem;
 }
 /* Cabecera del formulario */
 .form-header {
@@ -72,6 +71,9 @@ input:focus {
 }
 
 .form-options{
-    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
     text-align: center;
 }
