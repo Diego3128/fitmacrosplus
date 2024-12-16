@@ -19,7 +19,8 @@ FitMacrosPlus is a web application that helps users track their calorie intake a
 
 - **HTML5** 
 - **SASS** 
-- **PHP** 
+- **PHP**
+- **MVC**
 - **MYSQL** 
 - **GULP** 
   
