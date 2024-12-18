@@ -78,16 +78,18 @@
     position: absolute;
     top: 5rem;
     left: -7rem;
-    min-width: 13rem;
+    min-width: 14rem;
     background: v.$color-black;
     color: v.$color-gray;
     border-radius: 0 0 1rem 1rem;
-    max-height: 4rem;
+    height: 2.2rem;
     overflow: hidden;
 
     p{
         text-align: center;
+        color: v.$color-green;
         margin-bottom: 0;
+        text-transform: capitalize;
         font-size: v.$font-size-xs;
     }
   }

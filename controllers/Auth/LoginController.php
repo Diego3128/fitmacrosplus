@@ -18,7 +18,7 @@ class LoginController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //create an instance only with the data the email and password
-            $auth = new User($_POST["user"]);
+            $auth = new User($_POST["user"] ?? []);
             //validate received data
             $alerts = $auth->validateLogin();
 
@@ -34,22 +34,29 @@ class LoginController
                         $_SESSION["loggedin"] = true;
                         $_SESSION["id"] = $user->id;
                         $_SESSION["name"] = $user->name;
+                        $_SESSION["lastname"] = $user->lastname;
+                        $_SESSION["email"] = $user->email;
                         //check if the user is an admin
                         if ($user->isadmin == "0") {
                             header("location: /home");
+                            exit;
                         } else {
                             header("location: /admin");
+                            exit;
                         }
-                    } else {
-                        //checkVerfiedAndPassword() creates the alerts, we need to get it
-                        $alerts = User::getAlerts();
                     }
+                    //
                 } else {
+                    //return the same data to the form
+                    $user = $auth;
+                    //set the alert
                     $alerts = User::setAlert("error", "El usuario no existe");
                 }
             }
         }
 
+        //checkVerfiedAndPassword() creates the alerts, we need to get them
+        $alerts = User::getAlerts();
 
         $data = [
             "user" => $user,
@@ -61,7 +68,11 @@ class LoginController
     //logic when logging out
     public static function logout()
     {
-        echo "logout";
+        //session is already started in the Router verifyRoutes() method
+        $_SESSION = [];
+        session_destroy();
+        header("location: /");
+        exit;
     }
     //logic when creating a new account
     public static function create(Router $router)
@@ -71,7 +82,7 @@ class LoginController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //sync the object with the data from the form
-            $user->synchronize($_POST["user"]);
+            $user->synchronize($_POST["user"] ?? []);
             // debugAndFormat($user);
 
             ///validateInputs() returns possible errors
@@ -113,11 +124,11 @@ class LoginController
                             }
                         } else {
                             //error sending email
-                            $alerts = User::setAlert("error", "Error enviando el email de confirmación");
+                            $alerts = User::setAlert("error", "Error enviando el email de confirmación. Asegurate de usar un email valido o intenta mas tarde");
                         }
                     } catch (Exception $e) {
                         //error sending email
-                        $alerts = User::setAlert("error", "Error enviando el email de confirmación");
+                        $alerts = User::setAlert("error", "Error enviando el email de confirmación. Asegurate de usar un email valido o intenta mas tarde");
                     }
                 }
             }
@@ -197,14 +208,14 @@ class LoginController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //create a object with the password
-            $auth = new User($_POST["user"]);
+            $auth = new User($_POST["user"] ?? []);
             //validate received data    
             $auth->validateEmail();
 
             $alerts = User::getAlerts();
 
             if (empty($alerts)) {
-                //find the user in the database by their email
+                //find the user in the database by their email //uhere return null
                 $user = User::where("email", $auth->email);
 
                 if ($user and $user->verified == "1") {
@@ -229,6 +240,8 @@ class LoginController
                         User::setAlert("error", "Algo ha salido mal, inténtalo más tarde");
                     }
                 } else {
+                    //restablish the information from the form
+                    $user = $auth;
                     User::setAlert("error", "El correo no existe o no está verificado");
                 }
             }
@@ -271,7 +284,7 @@ class LoginController
 
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 //create a object with the password
-                $newPassword = $_POST["user"]["password"];
+                $newPassword = $_POST["user"]["password"] ?? '';
                 //validate password
                 $user->password = $newPassword;
                 $user->validatePassword();

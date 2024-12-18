@@ -23,7 +23,8 @@ function escapeHTML(string | null $html): string
 function isAuth()
 {
     if (!isset($_SESSION["loggedin"])) {
-        return header("location: /");
+        header("location: /");
+        exit;
     }
 }
 //check if the user is an admin

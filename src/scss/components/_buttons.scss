@@ -29,7 +29,7 @@
     right: 0;
   }
   
-  .btn-submit:hover::after {
+  .btn-submit:hover::after, .btn-submit:focus:after, .btn-submit:active::after {
     right: auto;
     left: 0;
     width: 100%;
@@ -48,7 +48,7 @@
     transition: color 0.3s ease-in-out;
   }
   
-  .btn-submit:hover .text {
+  .btn-submit:hover .text, .btn-submit:focus .text, .btn-submit:active .text {
     color: v.$color-black;
     animation: scaleUp 400ms ease-in-out;
   }

@@ -5,9 +5,10 @@
     "autoload": {
         "psr-4": {
             "Model\\": "./models",
-            "Model\\Auth\\": "./models/auth",
+            "Model\\Auth\\": "./models/Auth",
             "Controller\\": "./controllers",
-            "Controller\\Auth\\": "./controllers/auth/",
+            "Controller\\Auth\\": "./controllers/Auth/",
+            "Controller\\Home\\": "./controllers/Home/",
             "Classes\\": "./classes",
             "MVC\\": "./"
         }

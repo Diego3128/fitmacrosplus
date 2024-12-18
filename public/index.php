@@ -5,6 +5,7 @@ declare(strict_types=1);
 require __DIR__ . "/../includes/app.php"; //composer autoload and helper functions
 
 use Controller\Auth\LoginController;
+use Controller\Home\HomeController;
 use Controller\RootController;
 use MVC\Router;
 //router
@@ -35,7 +36,11 @@ $router->post(url: "/password/request", fn: [LoginController::class, "fortgotPas
 $router->get(url: "/password/reset", fn: [LoginController::class, "resetPass"]);
 $router->post(url: "/password/reset", fn: [LoginController::class, "resetPass"]);
 
-
+//private routes
+//show administration panel
+$router->get(url: "/home", fn: [HomeController::class, "index"]);
+//set profile info (only required once)
+$router->get(url: "/home/set-profile", fn: [HomeController::class, "setProfile"]);
 
 
 
