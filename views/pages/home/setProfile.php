@@ -1,5 +1,7 @@
 <?php require_once __DIR__ . "/../../partials/navbar.php"; ?>
 
+<?php require_once __DIR__ . "/../../partials/alerts.php"; ?>
+
 
 
 <div class="form-container stretched-container">
@@ -27,5 +29,6 @@
 <?php
 //scripts used in the home page:
 $scripts = "
-    <script src='/build/js/modules/navbar.min.js'></script>";
+<script src='/build/js/modules/navbar.min.js'></script>
+<script src='/build/js/modules/notifications.min.js'></script>";
 ?>

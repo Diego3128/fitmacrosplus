@@ -36,7 +36,7 @@ abstract class ActiveRecord
 
         $result = self::querySQL($query);
 
-        return array_shift($result);
+        return array_shift($result) ?? null;
     }
     // Search a record by a column and value
     public static function where(string $column, string $value): object | null
@@ -185,7 +185,7 @@ abstract class ActiveRecord
     //form an array resembling the record in db
     public function createAttributes(): array
     {
-        //associative array with the same structure as the table (propiedades) in db
+        //associative array with the same structure as the table in db
         $attributes = [];
 
         foreach (static::$dbColumns as $columnName) {

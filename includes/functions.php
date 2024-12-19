@@ -34,6 +34,21 @@ function isAdmin(): void
 
     if (!isset($_SESSION["admin"])) header("location: /appointment");
 }
+//block public forms if the user is authenticated
+function redirectToHomeIfLoggedIn(): void
+{
+    if (isset($_SESSION["loggedin"])) {
+        header("location: /home");
+        exit;
+    }
+}
+function blockLoginRegister(): void
+{
+    if (isset($_SESSION["loggedin"])) {
+        header("location: /home");
+        exit;
+    }
+}
 
 function getErrorMessage($code): string | null
 {

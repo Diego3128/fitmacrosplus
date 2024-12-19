@@ -7,7 +7,7 @@
 }
 /* Cabecera del formulario */
 .form-header {
-    background: v.$color-primary;
+    background: v.$color-gray;
     color: v.$color-black;
     text-align: center;
     padding:4rem 2rem 3rem;
@@ -38,8 +38,9 @@ legend {
     font-size: 2rem;
     font-weight: bold;
     color: v.$color-gray-dark;
-    margin-bottom: 2rem;
+    margin-bottom: 3.5rem;
     width: 100%;
+    text-transform: capitalize;
 }
 
 label {
@@ -47,6 +48,7 @@ label {
     margin-bottom: .5rem;
     font-weight: bold;
     color: v.$color-black;
+    text-transform: capitalize;
 }
 
 input {
@@ -84,9 +86,67 @@ input {
     outline: none;
     background-color: v.$color-white;
     margin-bottom: 2rem;
+    text-transform: capitalize;
 }
-
+.select{
+    option {
+        text-transform: inherit;
+    }
+}
 input:focus, .select:focus {
     outline: none;
     border-color: v.$color-black;
+}
+
+
+//label icons for userProfileForm
+//span
+.icon-label{
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.icon-label::after{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -4.2rem;
+    height: 3rem;
+    width: 3rem;
+    background-repeat: repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.icon-label:hover::after{
+    transform: scale(1.1);
+}
+
+.icon-label--age::after{
+    content: '';
+    background-image: url(/build/img/icons/id-card.svg);
+}
+
+.icon-label--weight::after{
+    content: '';
+    background-image: url(/build/img/icons/weight.svg);
+}
+.icon-label--height::after{
+    content: '';
+    background-image: url(/build/img/icons/ruler.svg);
+}
+.icon-label--gender::after{
+    content: '';
+    background-image: url(/build/img/icons/gender.svg);
+}
+
+.icon-label--activity::after{
+    content: '';
+    background-image: url(/build/img/icons/activity.svg);
+}
+
+.icon-label--intent::after{
+    content: '';
+    background-image: url(/build/img/icons/goal.svg);
 }

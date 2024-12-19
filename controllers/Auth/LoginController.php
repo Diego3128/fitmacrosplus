@@ -12,6 +12,9 @@ class LoginController
     //logic when logging in
     public static function login(Router $router)
     {
+        //block the form if the user is already logged in
+        redirectToHomeIfLoggedIn();
+
         $user = new User;
 
         $alerts = [];
@@ -77,6 +80,9 @@ class LoginController
     //logic when creating a new account
     public static function create(Router $router)
     {
+        //block the form if the user is already logged in
+        redirectToHomeIfLoggedIn();
+
         $user = new User;
         $alerts = [];
 

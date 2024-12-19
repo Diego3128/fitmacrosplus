@@ -2,7 +2,9 @@
 
     <div class="container flex-center">
 
-        <a href="/" class="logo"><img src="/build/img/logo/logo-white.svg" alt="logo"></a>
+        <a
+            href="<?php echo isset($_SESSION["loggedin"]) ? '/home' : '/' ?>"
+            class="logo"><img src="/build/img/logo/logo-white.svg" alt="logo"></a>
 
         <div class="dropdown-container">
             <div class="dropdown flex-center">

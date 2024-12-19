@@ -9,10 +9,9 @@ class RootController
 
     public static function index(Router $router)
     {
-        $data = [
-            "username" => "diego perez"
-        ];
+        //block if the user is already logged in
+        redirectToHomeIfLoggedIn();
         //render view home
-        $router->render("pages/home", $data);
+        $router->render("pages/home");
     }
 }

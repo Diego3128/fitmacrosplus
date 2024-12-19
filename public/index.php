@@ -41,6 +41,8 @@ $router->post(url: "/password/reset", fn: [LoginController::class, "resetPass"])
 $router->get(url: "/home", fn: [HomeController::class, "index"]);
 //set profile info (only required once)
 $router->get(url: "/home/set-profile", fn: [HomeController::class, "setProfile"]);
+$router->post(url: "/home/set-profile", fn: [HomeController::class, "setProfile"]);
+
 
 
 
