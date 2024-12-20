@@ -1,0 +1,42 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+
+.tab-container{
+    display: flex;
+    width: min(100%, 50rem );
+    margin: 0 auto;
+    border: 1px solid v.$color-gray;
+    padding: 3px;
+    overflow: hidden;
+    border-radius: .5rem;
+    background: v.$color-white; 
+
+    .tab{
+        width: 33%;
+        padding: 1rem;
+        font-size: 1.3rem;
+        cursor: pointer;
+        background-color: v.$color-white;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        @include m.respond-to('tablet') {
+            font-size: 1.5rem;
+        }
+    }
+
+    .tab:hover {
+        background-color: v.$color-gray;
+      }
+
+      .tab.tab--active {
+        background-color: v.$color-gray;
+        border-color: v.$color-gray-dark;
+      }
+}
+  
+// hide sections
+.section--hide{
+    display: none;
+}
+  

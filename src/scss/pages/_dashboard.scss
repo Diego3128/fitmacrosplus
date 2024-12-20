@@ -1,0 +1,205 @@
+  @use '../base/variables' as v;
+  @use '../base/mixins' as m;
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1.5rem;
+    grid-template-rows: max-content;
+    margin: 3rem auto 8rem;
+    align-items: stretch;
+    @include m.respond-to('tablet') {
+      grid-template-rows: 3, 25rem;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2.5rem;
+    }
+    @include m.respond-to('desktop') {
+          gap: 4rem;
+      }
+  }
+  // card positions in the grid
+  .card--meal-summary{
+    grid-row: 2 / 3;
+
+    @include m.respond-to('tablet') {
+      grid-row: 1/ 2;
+      grid-column: 1/ 4;
+    }
+  }
+
+  .card-container{
+    @include m.respond-to('tablet') {
+      grid-column: 4/ 6;
+      gap: 3.5rem;
+    }
+
+  }
+
+  .card--todays-meals{
+    @include m.respond-to('tablet') {
+      display: none;
+    }
+  }
+
+  .card-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .card--todays-meals--desktop{
+      display: none;
+      @include m.respond-to('tablet') {
+        display: block;
+      }
+    }
+
+    @include m.respond-to('tablet') {
+      gap: 3.5rem;
+    }
+  }
+
+  .card {
+    background-color: v.$color-white;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+  }
+  
+  .card__title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: v.$color-black;
+    margin-bottom: 2.5rem;
+    text-transform: capitalize;
+    @include m.respond-to('tablet') {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .card--daily-progress{
+    background: v.$color-black-light;
+
+    .card__title{
+      color: v.$color-white;
+      margin-bottom: 0;
+    }
+
+    .card__content--progress {
+      text-align: center;
+    }
+
+    .progress-percentage,   .progress-text {
+      font-weight: v.$font-bold;
+    }
+    .progress-percentage{
+      font-size: 2.5rem;
+      color: v.$color-blue;
+    }
+    .progress-text {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+    }
+    
+  }
+
+  
+
+  .nutrient-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .nutrient-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .nutrient-list__name{
+    width: 25%;
+  }
+  .nutrient-list__value{
+    width: 30%;
+    text-align: right;
+    overflow: hidden;
+  }
+
+  .nutrient-list__progress-bar {
+    background-color: v.$color-gray;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 1.2rem;
+    margin: 0 0.5rem;
+    width: 40%;
+  }
+  
+  .nutrient-list__name, 
+  .nutrient-list__value,
+  .meal-list__name,
+  .meal-list__calories {
+    font-size: 1.2rem;
+    @include m.respond-to('desktop') {
+      font-size: 1.4rem;
+    }
+
+    @include m.respond-to('desktop-large') {
+        font-size: 1.8rem;
+      }
+  }
+  
+
+  .nutrient-list__progress-fill {
+    background-color: v.$color-primary;
+    height: 100%;
+  }
+  
+  .meal-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .meal-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    min-height: 3rem;
+    background-color: v.$color-gray;
+    border-radius: .8rem;
+    padding: 1.2rem .6rem;
+  }
+  
+  .meal-list__icon {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 3.3rem;
+    width: 3.3rem;
+
+    @include m.respond-to('tablet') {
+      height: 4rem;
+      width: 4rem;
+    }
+  }
+
+.meal-list__icon--breakfast{
+    background-image: url(/build/img/icons/breakfast.svg);
+}
+.meal-list__icon--lunch{
+    background-image: url(/build/img/icons/lunch.svg);
+}
+
+.meal-list__icon--dinner{
+    background-image: url(/build/img/icons/dinner.svg);
+}
+  
+.card__content--placeholder {
+    text-align: center;
+    font-style: italic;
+}
+  
+
+// meals

@@ -1,0 +1,125 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.meal-summary{
+    // background-color: rgb(129, 151, 151);
+
+    .meal-summary__group{
+        border: 1px solid v.$color-gray;
+        padding: 2rem 1rem;
+        border-radius: 1rem;
+        max-width: 100rem;
+        margin: 0 auto 2.5rem;
+    }
+
+    .meal-summary__header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 2rem;
+        background-color: v.$color-gray;
+        padding: 1rem;
+        @include m.respond-to('tablet'){
+            padding: 2rem 1.2rem;
+        }
+
+        .meal-summary__meal-title{
+            font-size: 1.5rem;
+            font-weight: v.$font-bold;
+            margin: 0;
+            @include m.respond-to('tablet'){
+                font-size: 1.6rem;
+            }
+            @include m.respond-to('desktop'){
+                font-size: 1.8rem;
+            }
+        }
+
+        .add-btn{
+            background-color: v.$color-blue;
+            font-size: 1.2rem;
+            color: v.$color-white;
+            font-weight: v.$font-bold;
+            border-radius: .6rem;
+            text-transform: capitalize;
+            padding: 0 1rem;
+            height: 3rem;
+            align-items: center;
+            
+        }
+        .add-btn::before{
+            content: '+';
+            margin-right: .7rem;
+            font-size: 2.5rem;
+        }
+        .add-btn:hover{
+            opacity: .8;
+        }
+
+    }
+
+    .meal-summary__list{
+
+        .food-item{
+            border-bottom: 1px solid v.$color-gray ;
+            border-left: 1px solid v.$color-gray ;
+            border-right: 1px solid v.$color-gray ;
+            background: v.$color-white;
+
+            padding: .5rem;
+
+            .food-item__group{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 1.2rem;
+                font-weight: v.$font-bold;
+
+                @include m.respond-to('tablet'){
+                    font-size: 1.4rem;
+                }
+
+                @include m.respond-to('deskptop'){
+                    font-size: 1.5rem;
+                }
+                @include m.respond-to('deskptop-large'){
+                    font-size: 1.7rem;
+                }
+            }
+            .food-item__group > *{
+                margin: 0;
+            }
+
+            .food-item__macro{
+                font-weight: v.$font-medium;
+                margin-right: .7rem;
+            }
+            .food-item__size{
+                font-weight: v.$font-medium;
+                color: v.$color-black-light;
+            }
+            .food-item__macro:last-child{
+                margin-right: 0;
+            }
+            .food-item__macro.protein, .food-item__macro.carbs, .food-item__macro.fat{
+                text-transform: capitalize;
+            }
+            .food-item__macro.carbs{
+                color: v.$color-blue;
+            }
+            .food-item__macro.fat{
+                color: v.$color-primary;
+            }
+            .food-item__macro.protein{
+                color: v.$color-green;
+            }
+        }
+    }
+
+    @include m.respond-to('tablet'){
+        overflow-y: scroll;
+        max-height: 75rem;
+    }
+    
+}
+

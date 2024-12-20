@@ -76,18 +76,17 @@
 
   .user-info{
     position: absolute;
-    top: 5rem;
-    left: -7rem;
+    top: 2rem;
+    left: -14rem;
+    max-width: 14rem;
     min-width: 14rem;
-    background: v.$color-black;
-    color: v.$color-gray;
-    border-radius: 0 0 1rem 1rem;
+    background-color: transparent;
+    color: v.$color-white;
     height: 2.2rem;
     overflow: hidden;
 
     p{
-        text-align: center;
-        color: v.$color-green;
+        text-align: right;
         margin-bottom: 0;
         text-transform: capitalize;
         font-size: v.$font-size-xs;

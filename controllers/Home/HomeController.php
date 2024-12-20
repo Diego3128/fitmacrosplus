@@ -11,17 +11,18 @@ use MVC\Router;
 
 class HomeController
 {
+    //home (dashboard)
     public static function index(Router $router)
     {
         isAuth();
         $userId = $_SESSION["id"] ?? '0';
         $userProfile = UserProfile::where("user_id", $userId);
-        // debugAndFormat($userProfile);
         // redirect if there's no profile
         if (!$userProfile) {
             header("location: /home/set-profile");
             exit;
         }
+        //bring and send the user profile-meals, settings, etc
 
         $data = [
             "userProfile" => $userProfile,
@@ -48,8 +49,6 @@ class HomeController
         $userProfile = new UserProfile();
 
         $alerts = [];
-
-        // debugAndFormat($userProfile);
 
         //info to complete the form
         $activityLevels = ActivityLevel::all();
@@ -78,13 +77,9 @@ class HomeController
             } catch (\Exception $e) {
                 UserProfile::setAlert("error", "Algo salio mal, intenta mas tarde");
             }
-
-
-            //save 
         }
 
         $alerts = UserProfile::getAlerts();
-        // debugAndFormat($alerts);
 
         $data = [
             "userProfile" => $userProfile,
@@ -93,9 +88,6 @@ class HomeController
             "genders" => $genders,
             "alerts" => $alerts
         ];
-
-        // debugAndFormat($data);
-
 
         $router->render("pages/home/setProfile", $data);
     }
