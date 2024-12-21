@@ -133,11 +133,15 @@ abstract class ActiveRecord
 
         $result = self::$db->query($query);
 
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        return [
+            "result" => $result,
+            "information" => [
+                "insert_id" => self::$db->insert_id,
+                "affected_rows" => self::$db->affected_rows,
+                "error" => self::$db->error,
+                "info" => self::$db->info
+            ]
+        ];
     }
     // create a new record
     protected function create()

@@ -42,7 +42,9 @@ $router->get(url: "/home", fn: [HomeController::class, "index"]);
 //set profile info (only required once)
 $router->get(url: "/home/set-profile", fn: [HomeController::class, "setProfile"]);
 $router->post(url: "/home/set-profile", fn: [HomeController::class, "setProfile"]);
-
+//crud user profile
+$router->get(url: "/home/profile", fn: [HomeController::class, "profile"]);
+$router->post(url: "/home/profile", fn: [HomeController::class, "profile"]);
 
 
 

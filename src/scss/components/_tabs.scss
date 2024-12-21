@@ -1,10 +1,19 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
+.section-shifter{
+    position: fixed;
+    top: 6.6rem;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
 
 .tab-container{
     display: flex;
-    width: min(100%, 50rem );
+    width: min(100%, 75rem );
     margin: 0 auto;
     border: 1px solid v.$color-gray;
     padding: 3px;
@@ -13,15 +22,57 @@
     background: v.$color-white; 
 
     .tab{
+        position: relative;
+        display: block;
         width: 33%;
         padding: 1rem;
         font-size: 1.3rem;
         cursor: pointer;
         background-color: v.$color-white;
         transition: background-color 0.3s ease, color 0.3s ease;
+        min-height: 3.8rem;
 
         @include m.respond-to('tablet') {
             font-size: 1.5rem;
+        }
+
+        span{
+            display: none;
+            @include m.respond-to('tablet') {
+                pointer-events: none;
+                display: block;
+                text-align: center;
+            }   
+        }
+
+        &.tab--profile::before{
+            background-image: url(/build/img/icons/profile-icon.svg);
+        }
+
+        &.tab--panel::before{
+            background-image: url(/build/img/icons/panel-icon.svg);
+        }
+
+        &.tab--settings::before{
+            background-image: url(/build/img/icons/settings-icon.svg);
+        }
+
+        &.tab--profile::before, &.tab--panel::before, &.tab--settings::before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2.5rem;
+            height: 2.5rem;
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            @include m.respond-to('tablet') {
+                //move left
+                left: 2rem;
+            }
+
         }
     }
 
@@ -35,8 +86,7 @@
       }
 }
   
-// hide sections
-.section--hide{
-    display: none;
+//margin top to the section below the fixed header
+.profile, .dashboard, .settings{
+    margin-top: 8rem;
 }
-  

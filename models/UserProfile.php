@@ -96,7 +96,7 @@ class UserProfile extends ActiveRecord
             !is_numeric($this->height) ||
             $this->height < 50 ||
             $this->height > 300 ||
-            (str_contains($this->height, '.') && strlen($this->height) > 6)
+            strlen($this->height) > 3
         ) {
             self::$alerts["error"][] = "La altura debe ser valida";
         }

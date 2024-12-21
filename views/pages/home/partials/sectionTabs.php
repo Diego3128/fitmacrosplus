@@ -1,7 +1,7 @@
 <div class="section-shifter">
     <div class="tab-container">
-        <button data-sectionStep="1" class="tab">Perfil</button>
-        <button data-sectionStep="2" class="tab">Registro</button>
-        <button data-sectionStep="3" class="tab">Configuración</button>
+        <a href="/home/profile" class="tab tab--profile"><span>Perfil</span></a>
+        <a href="/home" class="tab tab--panel"><span>Registro</span></a>
+        <a href="/home/settings" class="tab tab--settings"><span>Configuración</span></a>
     </div>
 </div>

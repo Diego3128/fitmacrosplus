@@ -2,6 +2,9 @@
 require __DIR__ . '/../vendor/autoload.php';
 require 'functions.php';
 
+//set timezone
+date_default_timezone_set('America/Bogota');
+
 //Main class active record
 use Model\ActiveRecord;
 // ent variables
