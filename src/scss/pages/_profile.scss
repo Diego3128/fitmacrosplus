@@ -1,0 +1,70 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.profile {
+    padding-top: 2rem;
+}
+/* Contenedor principal */
+.user-requirements {
+    width: min(60rem, 90%);
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: v.$color-white;
+    border: 1px solid v.$color-gray;
+    border-radius: .8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: v.$main-font
+}
+
+.user-requirements__title {
+    font-size: 1.8rem;
+    font-weight: v.$font-bold;
+    margin-bottom: 2.5rem;
+    color: v.$color-gray-dark;
+    text-align: center;
+}
+
+.user-requirements__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user-requirements__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid v.$color-gray;
+    font-size: 1.3rem;
+    align-items: center;
+    
+}
+
+.user-requirements__item:last-child {
+    border-bottom: none;
+}
+
+.user-requirements__label {
+    font-weight: bold;
+    color: v.$color-gray-dark;
+}
+
+.user-requirements__value {
+    color: v.$color-black-secondary;
+    font-weight: normal;
+}
+
+@include m.respond-to('tablet'){
+    .user-requirements__item {
+        flex-direction: row;
+        align-items: center;
+        font-size: 1.6rem;
+    }
+
+    .user-requirements__label {
+        margin-bottom: 0.3rem;
+    }
+}
+
+
+

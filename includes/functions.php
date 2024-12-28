@@ -27,6 +27,14 @@ function isAuth()
         exit;
     }
 }
+//validate if a value is an integer
+function validateInteger($value)
+{
+    if (filter_var(trim($value), FILTER_VALIDATE_INT)) {
+        return (int) $value;
+    }
+    return null; //invalid int
+}
 //check if the user is an admin
 function isAdmin(): void
 {
@@ -34,6 +42,23 @@ function isAdmin(): void
 
     if (!isset($_SESSION["admin"])) header("location: /appointment");
 }
+//redirect to a ceartain endpoint
+function redirectTo($path)
+{
+    header("location: " . $path);
+    exit;
+}
+//format a decimal number by removing unsignificant zeros
+function formatDecimal($number)
+{
+    if (!is_numeric($number)) return $number;
+
+    return ($number == floor($number)) ? sprintf('%d', $number) : sprintf('%s', $number);
+    // Example:
+    // 100.0// output: 100
+    // 100. // output: 100.5
+}
+
 //block public forms if the user is authenticated
 function redirectToHomeIfLoggedIn(): void
 {

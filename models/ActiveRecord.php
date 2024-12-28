@@ -38,7 +38,7 @@ abstract class ActiveRecord
 
         return array_shift($result) ?? null;
     }
-    // Search a record by a column and value
+    // Search a single record by a column and value
     public static function where(string $column, string $value): object | null
     {
         $value = trim(self::$db->escape_string($value));
@@ -49,6 +49,17 @@ abstract class ActiveRecord
         //first position contains the result
         return array_shift($result) ?? null;
     }
+
+    // Search a all the records by a column and value
+    public static function findAllByColumn(string $column, string $value): array
+    {
+        $value = trim(self::$db->escape_string($value));
+        $query = "SELECT * FROM " . static::$tableName . " WHERE {$column} = '{$value}' ";
+        //returns an array (or an empty array)
+        $result = self::querySQL($query);
+        return $result;
+    }
+
     // plain sql query (used for advanced queries, for instance, joining tables)
     public static function SQL(string $query): array | bool
     {

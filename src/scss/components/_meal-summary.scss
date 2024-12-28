@@ -61,12 +61,32 @@
     .meal-summary__list{
 
         .food-item{
+            display: flex;
+            justify-content: space-between;
             border-bottom: 1px solid v.$color-gray ;
             border-left: 1px solid v.$color-gray ;
             border-right: 1px solid v.$color-gray ;
             background: v.$color-white;
-
             padding: .5rem;
+
+            &:hover{
+            background: v.$color-gray;
+
+            }
+
+            .flex-item--info{
+                width: 95%;
+            }
+
+            .flex-item--options{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 1rem;
+                @include m.respond-to('tablet'){
+                margin-right: 1rem;
+                }
+            }
 
             .food-item__group{
                 display: flex;
@@ -98,10 +118,15 @@
                 font-weight: v.$font-medium;
                 color: v.$color-black-light;
             }
+
             .food-item__macro:last-child{
                 margin-right: 0;
             }
-            .food-item__macro.protein, .food-item__macro.carbs, .food-item__macro.fat{
+            .food-item__macro.protein, 
+            .food-item__macro.carbs, 
+            .food-item__macro.fat, 
+            .food-item__name, 
+            .food-item__unit{
                 text-transform: capitalize;
             }
             .food-item__macro.carbs{
@@ -113,6 +138,10 @@
             .food-item__macro.protein{
                 color: v.$color-green;
             }
+
+            &.borders{
+            border-top: 1px solid v.$color-gray ;
+            }
         }
     }
 
@@ -120,6 +149,53 @@
         overflow-y: scroll;
         max-height: 75rem;
     }
-    
 }
 
+// options
+
+.flex-item--options{
+    position: relative;
+
+    .options-toggle{
+        display: block;
+        width: 100%;
+        font-size: 1.7rem;
+        font-weight: v.$font-bold;
+    }
+
+    .options {
+        position: absolute;
+        left: -10rem;
+        width: 10rem;
+        top: 70%;
+        background-color: v.$color-white;
+        box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+    
+    .options{
+        display: flex;
+        flex-direction: column;
+        border-radius: .5rem;
+        overflow: hidden;
+        .option{
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid v.$color-gray;
+            text-align: center;
+            margin: 0;
+            width: 100%;
+            padding: .7rem;
+            border-radius: 0%;
+            font-size: 1.3rem;
+        }
+        .option:hover{
+            cursor: pointer;
+        }
+    }
+
+    .options.hidden {
+        display: none;
+    }
+    
+}

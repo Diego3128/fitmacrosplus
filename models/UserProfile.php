@@ -18,6 +18,7 @@ class UserProfile extends ActiveRecord
         'gender_id',
         'activity_level_id',
         'goal_id',
+        'formula_id',
     ];
     // Possible erros when trying to create an instance
     protected static $alerts = [];
@@ -31,7 +32,7 @@ class UserProfile extends ActiveRecord
     public $gender_id;
     public $activity_level_id;
     public $goal_id;
-    //to do: attributes like calories, formula..
+    public $formula_id;
 
     public function __construct(array $args = [])
     {
@@ -42,11 +43,16 @@ class UserProfile extends ActiveRecord
         $this->gender_id = $args['gender_id'] ?? '';
         $this->activity_level_id = $args['activity_level_id'] ?? '';
         $this->goal_id = $args['goal_id'] ?? '';
+        $this->formula_id = $args['formula_id'] ?? '';
     }
 
     public function setUserId($user_id)
     {
         $this->user_id = $user_id;
+    }
+    public function setFormulaId($formula_id)
+    {
+        $this->formula_id = $formula_id;
     }
     //validate inputs from the form
     public function validate()

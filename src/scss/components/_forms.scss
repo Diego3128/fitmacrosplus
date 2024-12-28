@@ -5,8 +5,8 @@
     background: v.$color-white;
     margin: 0 auto 20rem;
 }
-/* Cabecera del formulario */
-.form-header {
+/* form header or title */
+.form-header, .title-container {
     background: v.$color-gray;
     color: v.$color-black;
     text-align: center;
@@ -14,7 +14,7 @@
     margin-bottom: 3rem;
 }
 
-.form-header h2 {
+.form-header h2, .title-container h2 {
     margin: 0;
     font-size: 2.7rem;
     font-weight: v.$font-bold;
@@ -149,4 +149,123 @@ input:focus, .select:focus {
 .icon-label--intent::after{
     content: '';
     background-image: url(/build/img/icons/goal.svg);
+}
+
+
+
+
+
+
+///food creation form
+
+/* Campos del formulario */
+.food-creation__field {
+    margin-bottom: 1rem;
+
+    @include m.respond-to('tablet'){
+        margin-bottom: .5rem;
+    }
+}
+
+.food-creation__field.flex{
+    // background: firebrick;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+    margin-bottom: -.6rem;
+
+    &.pdf{
+        padding-left: 1rem;
+
+        @include m.respond-to('tablet'){
+            padding-left: 1.5rem;
+        }
+    }
+
+    &.unit{
+        margin: 1.5rem 0 0;
+    }
+
+    .food-creation__label{
+        width: 55%;
+        margin: 0;
+        font-weight: v.$font-regular;
+
+        @include m.respond-to('tablet'){
+            width: 70%;
+            overflow: visible;
+        }
+    }
+    .food-creation__label:hover{
+        cursor: pointer;
+    }
+    .food-creation__input{
+        width: 35%;
+        margin: 0;
+        font-size: inherit;
+        height: 2.5rem;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0%;
+        background-color: transparent;
+        padding: 0;
+
+        &.calories{
+            background: v.$color-gray;
+            border-radius: 1rem;
+        }
+        &.name, &.brand{
+            width: 45%;
+        }
+
+    }
+
+    .food-creation__select{
+        width: 40%;
+        padding: .5rem;
+        margin-bottom: 0;
+        font-size: inherit;
+        margin-bottom: .5rem;
+    }
+
+    @include m.respond-to('tablet'){
+        font-size: 1.6rem;
+        margin-bottom: -.9rem;
+    }
+}
+.food-creation__legend{
+    margin: 3rem auto;
+}
+.food-creation__toggle {
+    display: block;
+    background-color: v.$color-gray-dark;
+    color: v.$color-white;
+    border: none;
+    padding: 1rem;
+    margin: 2rem 0 0 auto;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.food-creation__toggle:hover {
+    background-color: v.$color-gray;
+    color: v.$color-black;
+}
+
+
+.food-creation__cancel {
+    display: inline-block;
+    color: v.$color-red;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    border: 1px solid v.$color-red;
+    margin-top: 3rem;
+}
+
+/* Campos avanzados ocultos */
+.food-creation__fieldset--hidden {
+    display: none;
 }

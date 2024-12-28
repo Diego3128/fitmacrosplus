@@ -1,0 +1,26 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.paginator {
+    margin-bottom: 4rem;
+}
+
+.paginator__btn {
+    background-color: v.$color-blue; 
+    color: v.$color-white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.paginator__btn:hover {
+    background-color: v.$color-blue-dark;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.paginator__btn:active {
+    background-color: v.$color-blue-dark;
+    transform: scale(0.98); 
+}

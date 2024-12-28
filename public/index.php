@@ -46,6 +46,18 @@ $router->post(url: "/home/set-profile", fn: [HomeController::class, "setProfile"
 $router->get(url: "/home/profile", fn: [HomeController::class, "profile"]);
 $router->post(url: "/home/profile", fn: [HomeController::class, "profile"]);
 
+//user foods CRUD
+//create a new food
+$router->get(url: "/home/newfood", fn: [HomeController::class, "createFood"]);
+$router->post(url: "/home/newfood", fn: [HomeController::class, "createFood"]);
+//edit and read  a food
+$router->get(url: "/home/editfood", fn: [HomeController::class, "editFood"]);
+$router->post(url: "/home/editfood", fn: [HomeController::class, "editFood"]);
+//read all foods
+$router->get(url: "/home/foods", fn: [HomeController::class, "getAllFoods"]);
+// delete
+$router->post(url: "/home/deletefood", fn: [HomeController::class, "deleteFood"]);
+
 
 
 
