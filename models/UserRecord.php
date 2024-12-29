@@ -4,7 +4,7 @@ namespace Model;
 
 use Model\ActiveRecord;
 
-class UserRecords extends ActiveRecord
+class UserRecord extends ActiveRecord
 {
     //name of the table in db
     protected static $tableName = 'user_records';
@@ -33,5 +33,20 @@ class UserRecords extends ActiveRecord
     public function setUserProfileId($userProfileId)
     {
         $this->user_profile_id = $userProfileId;
+    }
+    //set record date
+    public function setRecordDate($date)
+    {
+        $this->date = $date;
+    }
+
+    //set user profile id
+    public static function getUserRecord($userProfileId, $date)
+    {
+        $query = "SELECT * FROM ";
+        $query .= self::$tableName . " WHERE user_profile_id='{$userProfileId}'";
+        $query .= " AND date='{$date}' LIMIT 1";
+        $result = self::SQL($query);
+        return $result[0] ?? [];
     }
 }

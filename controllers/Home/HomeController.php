@@ -4,6 +4,7 @@ namespace Controller\Home;
 
 //models
 
+use DateTime;
 use Exception;
 use Model\ActivityLevel;
 use Model\Formula;
@@ -12,8 +13,10 @@ use Model\Goal;
 use Model\Units;
 use Model\UserFoodBasic;
 use Model\UserFoods;
+use Model\UserMealDetail;
 use Model\UserMeals;
 use Model\UserProfile;
+use Model\UserRecord;
 use Model\UserRequirement;
 use MVC\Router;
 
@@ -26,21 +29,106 @@ class HomeController
         $userId = $_SESSION["id"] ?? '0';
         $userProfile = UserProfile::where("user_id", $userId);
         // redirect if there's no profile
-        if (!$userProfile) {
-            header("location: /home/set-profile");
-            exit;
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        // init variables
+
+        $alerts = []; //erros
+        $emptyRecord = false; //$date !== $today and there's no $userRecord for that date
+
+        $userRequirements = null; //user requirements
+        $userMeals = []; //all user meals (breakfast, lunch, dinner, etc..)
+
+        $processedMealDetails = []; //every record of each meal processed
+        $userRecord = null; // a userRecord related with the date
+
+        $mealStats = []; //total kal, protein, carbs and fat of each meal
+        $generalStats = []; //total kal, protein, carbs and fat of all the meals
+        $statPercentages = []; //total %percentage of kal, protein, carbs and fat of all the meals
+
+        //get the searched date
+        $date = $_GET["date"] ?? date('Y-m-d');
+        //validate date
+        if (validateDate($date)) {
+            // record with the date and userProfile
+            $userRecord = UserRecord::getUserRecord($userProfile->id, $date);
+            // user meals
+            $userMeals = UserMeals::findAllByColumn('user_profile_id', $userProfile->id);
+            // user requirements
+            $userRequirements = UserRequirement::where('user_profile_id', $userProfile->id);
+
+            if (!empty($userRecord)) {
+                // get all the possible userRecordDetails for THAT date
+                $userMealDetails = UserMealDetail::getMealDetails($userProfile->id, $date, $userRecord->id);
+
+                // userMealDetails can be empty. This is handle in all the functions below
+
+                //calculated proportions of each food in every meal
+                $processedMealDetails = UserMealDetail::processMealDetails($userMealDetails);
+
+                //calc stadistics
+                [$mealStats, $generalStats] = UserMealDetail::calcMealStats($userMeals, $processedMealDetails);
+
+                //calc percentages
+                $statPercentages = UserMealDetail::calcStatPercentage($userRequirements, $generalStats);
+                //
+            } else {
+                // if there's no record, create a new record if the date is today
+                if ($date === date("Y-m-d")) {
+                    $userRecord = new UserRecord();
+                    //set date and profile id
+                    $userRecord->setUserProfileId($userProfile->id);
+                    $userRecord->setRecordDate($date);
+                    //save the new record
+                    try {
+                        $result = $userRecord->save();
+                        if ($result["result"]) {
+                            $alerts = UserRecord::setAlert("success", "Se ha iniciado un nuevo registro");
+                            //calc stadistics (empty)
+                            [$mealStats, $generalStats] = UserMealDetail::calcMealStats($userMeals, $processedMealDetails);
+                            //calc percentages (empty)
+                            $statPercentages = UserMealDetail::calcStatPercentage($userRequirements, $generalStats);
+                        } else {
+                            $alerts = UserRecord::setAlert("error", "No se pudo iniciar el registro");
+                        }
+                    } catch (Exception $e) {
+                        $alerts = UserRecord::setAlert("error", "No se pudo iniciar el registro");
+                    }
+                } else {
+                    // when the date is not today and there's no userRecord
+                    // the user can't create records
+                    $emptyRecord = true;
+                    $today = new DateTime();
+                    $seekedDate = new DateTime($date);
+
+
+                    if ($seekedDate > $today) {
+                        $alerts = UserRecord::setAlert("warning", "No se pueden crear nuevos registros futuros");
+                    } elseif ($seekedDate < $today) {
+                        $alerts = UserRecord::setAlert("warning", "No se pueden crear nuevos registros pasados");
+                        $alerts = UserRecord::setAlert("warning", "No se creo registro este día");
+                    }
+                }
+            }
+        } else {
+            //incorrect date
+            redirectTo("/home");
         }
 
-        //1- bring user meals
-        $userMeals = UserMeals::findAllByColumn("user_profile_id", $userProfile->id);
-
-        // debugAndFormat($userMeals);
-
-
+        $data = [];
 
         $data = [
-            "userMeals" => $userMeals
+            "alerts" => $alerts,
+            "userMeals" => $userMeals,
+            "userRequirement" => $userRequirements,
+            "processedMealDetails" => $processedMealDetails,
+            "mealStats" => $mealStats,
+            "generalStats" => $generalStats,
+            "statPercentages" => $statPercentages,
+            "date" => $date
         ];
+
+        if ($emptyRecord) $data["emptyRecord"] = $emptyRecord;
 
         $router->render("pages/home/panel", $data);
     }

@@ -203,3 +203,57 @@
   
 
 // meals
+
+
+.empty-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 80%; 
+  width: 100%; 
+  border: 2px dashed v.$color-gray; 
+  border-radius: 1rem; 
+  color: v.$color-gray-dark;
+  font-family: inherit;
+  font-size: 1.3rem; 
+  padding: 2rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: all 0.3s ease; 
+
+  &:hover {
+    background-color: #f4f4f4; 
+    border-color: v.$color-gray-dark;
+  }
+
+  p {
+    margin: 10px 0;
+  }
+  
+   p:first-child {
+    font-weight: v.$font-bold; 
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 1.3rem 2rem;
+    background-color: v.$color-blue;
+    color: v.$color-white;
+    text-decoration: none;
+    border-radius: .5rem;
+    font-size: 1.5rem;
+    font-weight: v.$font-bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: v.$color-blue-dark;
+  }
+  
+}
+
+
+
+

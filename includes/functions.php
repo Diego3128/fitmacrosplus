@@ -35,6 +35,28 @@ function validateInteger($value)
     }
     return null; //invalid int
 }
+function validateDate(string $date): bool
+{
+    if (empty($date)) return false;
+
+    $dateParts = explode("-", $date);
+
+    if (count($dateParts) !== 3) return false;
+
+    [$year, $month, $day] = $dateParts;
+
+    $year = is_numeric($year) ? (int)$year : 0;
+    $month = is_numeric($month) ? (int)$month : 0;
+    $day = is_numeric($day) ? (int)$day : 0;
+
+    return checkdate($month, $day, $year);
+}
+//create record params
+function generateRecordParams($recordId, $mealId)
+{
+    return "recordid={$recordId}&mealid={$mealId}";
+}
+
 //check if the user is an admin
 function isAdmin(): void
 {
