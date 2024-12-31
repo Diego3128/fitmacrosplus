@@ -153,13 +153,10 @@ input:focus, .select:focus {
 
 
 
-
-
-
 ///food creation form
 
-/* Campos del formulario */
-.food-creation__field {
+/* form fiels */
+.food-creation__field, food-detail {
     margin-bottom: 1rem;
 
     @include m.respond-to('tablet'){

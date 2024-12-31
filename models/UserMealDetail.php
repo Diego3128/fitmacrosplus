@@ -14,6 +14,7 @@ class UserMealDetail extends ActiveRecord
         'meal_name',
         'date',
         'record_id',
+        'record_detail_id',
         'food',
         'protein',
         'carbs',
@@ -38,6 +39,7 @@ class UserMealDetail extends ActiveRecord
     public $meal_name;
     public $date;
     public $record_id;
+    public $record_detail_id;
     public $food;
     public $protein;
     public $carbs;
@@ -53,6 +55,7 @@ class UserMealDetail extends ActiveRecord
         $this->meal_name = $args['meal_name'] ?? '';
         $this->date = $args['date'] ?? '';
         $this->record_id = $args['record_id'] ?? '';
+        $this->record__detail_id = $args['record__detail_id'] ?? '';
         $this->food = $args['food'] ?? '';
         $this->protein = $args['protein'] ?? '';
         $this->carbs = $args['carbs'] ?? '';
@@ -70,7 +73,8 @@ class UserMealDetail extends ActiveRecord
                     user_meals.id AS meal_id,
                     user_meals.name AS meal_name,
                     user_records.date AS date,
-                    user_record_details.id AS record_id,
+                    user_records.id AS 'record_id',
+                    user_record_details.id AS 'record_detail_id',
                     user_foods.name AS food,
                     user_foods.protein AS protein,
                     user_foods.carbohydrate AS carbs,

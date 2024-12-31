@@ -7,7 +7,11 @@
                 <!-- header -->
                 <div class="meal-summary__header">
                     <h4 class="meal-summary__meal-title"><?php echo escapeHTML($userMeal->name) ?></h4>
-                    <button data-meal-id="<?php echo $userMeal->id ?>" class="meal-summary__btn add-btn flex">Nuevo</button>
+                    <form action="/home/new-record-detail" method="get">
+                        <input type="hidden" value="<?php echo $userMeal->id  ?>" name="mealid">
+                        <input type="hidden" value="<?php echo $userRecordId ?? '' ?>" name="recordid">
+                        <button type="submit" class="meal-summary__btn add-btn flex">Nuevo</button>
+                    </form>
 
 
                 </div>
@@ -52,13 +56,16 @@
                                     <button class="options-toggle">...</button>
                                     <div class="options hidden">
                                         <?php
-                                        $params = generateRecordParams($processedMealDetail->record_id, $processedMealDetail->meal_id);
+                                        $params = generateRecordParams(
+                                            $processedMealDetail->record_detail_id,
+                                            $processedMealDetail->meal_id
+                                        );
                                         ?>
                                         <a class="option" href="/home/editRecord?<?php echo $params ?>">Editar</a>
                                         <form action="/home/deleteRecord" method="post">
                                             <input type="hidden"
-                                                value="<?php echo $processedMealDetail->record_id ?>"
-                                                name="record_id">
+                                                value="<?php echo $processedMealDetail->record_detail_id ?>"
+                                                name="record_detail_id">
                                             <input type="hidden"
                                                 value="<?php echo $processedMealDetail->meal_id ?>"
                                                 name="meal_id">

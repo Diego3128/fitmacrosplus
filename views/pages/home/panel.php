@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../partials/alerts.php";
 ?>
 <?php require_once __DIR__ . "/partials/sectionTabs.php"; ?>
 
+<?php require_once __DIR__ . "/partials/dateSeeker.php"; ?>
 
 <!-- dashboard section -->
 <section class="dashboard stretched-container container" data-section-id="2">
@@ -36,7 +37,7 @@ require_once __DIR__ . "/../../partials/alerts.php";
     <?php require __DIR__ . "/partials/mealStats.php"; ?>
 
     <section class="card card--meal-summary">
-        <h2 class="card__title">Registro || Fecha:<?php if (isset($date)) echo $date ?></h2>
+        <h2 class="card__title">Registro</h2>
 
         <?php if (isset($emptyRecord)) require_once __DIR__ . "/partials/emptySummaryAlert.php";  ?>
 

@@ -27,6 +27,7 @@
             font-size: 1.5rem;
             font-weight: v.$font-bold;
             margin: 0;
+            text-transform: capitalize;
             @include m.respond-to('tablet'){
                 font-size: 1.6rem;
             }

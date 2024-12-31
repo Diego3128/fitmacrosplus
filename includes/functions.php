@@ -54,7 +54,7 @@ function validateDate(string $date): bool
 //create record params
 function generateRecordParams($recordId, $mealId)
 {
-    return "recordid={$recordId}&mealid={$mealId}";
+    return "record_detail_id={$recordId}&mealid={$mealId}";
 }
 
 //check if the user is an admin

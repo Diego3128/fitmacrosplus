@@ -41,6 +41,7 @@ class HomeController
 
         $processedMealDetails = []; //every record of each meal processed
         $userRecord = null; // a userRecord related with the date
+        $userRecordId = null;
 
         $mealStats = []; //total kal, protein, carbs and fat of each meal
         $generalStats = []; //total kal, protein, carbs and fat of all the meals
@@ -58,8 +59,10 @@ class HomeController
             $userRequirements = UserRequirement::where('user_profile_id', $userProfile->id);
 
             if (!empty($userRecord)) {
+                $userRecordId = $userRecord->id;
                 // get all the possible userRecordDetails for THAT date
                 $userMealDetails = UserMealDetail::getMealDetails($userProfile->id, $date, $userRecord->id);
+                // debugAndFormat($userMealDetails);
 
                 // userMealDetails can be empty. This is handle in all the functions below
 
@@ -83,6 +86,8 @@ class HomeController
                     try {
                         $result = $userRecord->save();
                         if ($result["result"]) {
+                            $userRecordId = $result["information"]["insert_id"];
+
                             $alerts = UserRecord::setAlert("success", "Se ha iniciado un nuevo registro");
                             //calc stadistics (empty)
                             [$mealStats, $generalStats] = UserMealDetail::calcMealStats($userMeals, $processedMealDetails);
@@ -129,6 +134,9 @@ class HomeController
         ];
 
         if ($emptyRecord) $data["emptyRecord"] = $emptyRecord;
+        if ($userRecordId) $data["userRecordId"] = $userRecordId;
+
+        // debugAndFormat($data);
 
         $router->render("pages/home/panel", $data);
     }
@@ -462,5 +470,104 @@ class HomeController
         } else {
             redirectTo($_SERVER['HTTP_REFERER'] ?? '/home');
         }
+    }
+
+    //create a new record detail (food list) //endpoint: /home/new-record-detail?mealid=id&recordid=id
+    public static function newRecordDetail(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $mealId = $_GET["mealid"] ?? '';
+        $recordId = $_GET["recordid"] ?? '';
+
+        //validate ids
+        if (!validateInteger($mealId) || !validateInteger($recordId)) redirectTo("/home");
+
+        //fetch user foods (basic data)
+        $userFoods = UserFoodBasic::findAllByColumn("user_profile_id", $userProfile->id);
+
+        $units = Units::all();
+
+        $data = [
+            "units" => $units,
+            "userFoods" => $userFoods,
+            "mealId" => $mealId,
+            "recordId" => $recordId
+        ];
+
+
+        $router->render('pages/home/foodList', $data);
+    }
+
+    //create a new record_detail //endpoint: home/new-record-detail/create?mealid=id&foodid=id'&recordid=id
+    public static function createRecordDetail(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $mealId = $_GET["mealid"] ?? '';
+        $recordId = $_GET["recordid"] ?? '';
+        $foodId = $_GET["foodid"] ?? '';
+
+        // debugAndFormat($_GET);
+
+        //validate ids
+        if (!validateInteger($mealId) || !validateInteger($recordId) || !validateInteger($foodId)) redirectTo("/home");
+
+        //find food
+        $userFood = UserFoods::fetchUserFood($userProfile->id, $foodId);
+
+        //redirect invalid food
+        if (!$userFood) redirectTo("/home");
+
+        // attributes translations 
+        $translations = UserFoods::getTranslations();
+        // nutrient unit formats
+        $nutrientUnits = UserFoods::getNutrientUnits();
+
+        // measurement units
+        $units = Units::all();
+
+        //possible alerts updating the food
+        $alerts = [];
+
+        $units = Units::all();
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            debugAndFormat($_POST);
+
+            debugAndFormat($_POST["original_size"]);
+
+            //  A $POST["original_size"] create a record_detail with the original food serving size
+            // other wize read the ["portion"] and calc the proportions
+        }
+
+        $data = [
+            "userFood" => $userFood,
+            "translations" => $translations,
+            "units" => $units,
+            "alerts" => $alerts,
+            "nutrientUnits" => $nutrientUnits,
+            "mealId" => $mealId,
+            "recordId" => $recordId,
+            "foodId" => $foodId
+        ];
+
+        // debugAndFormat($data);
+
+        $router->render('pages/home/createRecordDetail', $data);
     }
 }

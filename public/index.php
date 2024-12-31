@@ -58,7 +58,13 @@ $router->get(url: "/home/foods", fn: [HomeController::class, "getAllFoods"]);
 // delete
 $router->post(url: "/home/deletefood", fn: [HomeController::class, "deleteFood"]);
 
-
+//user_record_detail CRUD
+//food list
+$router->get(url: "/home/new-record-detail", fn: [HomeController::class, "newRecordDetail"]);
+//create
+$router->get(url: "/home/new-record-detail/create", fn: [HomeController::class, "createRecordDetail"]);
+$router->post(url: "/home/new-record-detail/create", fn: [HomeController::class, "createRecordDetail"]);
+// edit
 
 
 

@@ -1,0 +1,85 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+.portion-form{
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: min(60rem, 90%);
+    margin: 0 auto;
+    gap: 2rem;
+
+    input{
+        margin: 0;
+        max-width: 20rem;
+        height: 4rem;
+    }
+
+    @include m.respond-to('tablet'){
+        flex-wrap: nowrap;
+    }
+}
+
+.portion-form__btn, .edit{
+        background-color: v.$color-blue; 
+        color: v.$color-white;
+        text-decoration: none;
+        padding: 1rem 2rem;
+        font-size: 1.4rem;
+        border-radius: .5rem;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        background-color: v.$color-blue-dark;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:active {
+        background-color: v.$color-blue-dark;
+        transform: scale(0.98); 
+    }
+    
+}
+.edit{
+    background-color: v.$color-gray-dark;
+    &:hover {
+        color: v.$color-black;
+        background-color: v.$color-gray;
+    }
+    
+    &:active {
+        color: v.$color-black;
+        background-color: v.$color-gray;
+    }
+}
+.food-details-container {
+    width: min(40rem, 90%);
+    padding: 5rem 2rem;
+    margin: 3rem auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.156);
+    border-radius: 1rem;
+    
+}
+
+.food-detail{
+    justify-content: space-between;
+
+    .food-detail__name{
+        overflow: hidden;
+        height: 2.5rem;
+    }
+}
+
+.food-detail_value{
+        width: 35%;
+        margin: 0;
+        font-size: inherit;
+        height: 2.5rem;
+        text-align: right;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid v.$color-gray;
+        border-radius: 0%;
+        background-color: transparent;
+        padding: 0;
+}

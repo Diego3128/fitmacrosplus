@@ -7,7 +7,7 @@ require_once __DIR__ . "/../../partials/alerts.php"; ?>
         <h2 class="food-creation__title">Crear nuevo alimento</h2>
     </div>
 
-    <form action="" method="POST" class="food-creation__form form-body" novalidate>
+    <form action="" method="POST" class="food-creation__form form-body">
 
         <?php require_once __DIR__ . "/forms/foodForm.php"; ?>
 

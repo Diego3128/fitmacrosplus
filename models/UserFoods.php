@@ -100,6 +100,88 @@ class UserFoods extends ActiveRecord
     public $selenium;
     public $zinc;
 
+    protected static $translations = [
+        "id" => ["es" => "ID", "en" => "ID"],
+        "user_profile_id" => ["es" => "ID del perfil de usuario", "en" => "User Profile ID"],
+        "name" => ["es" => "Nombre", "en" => "Name"],
+        "brand" => ["es" => "Marca", "en" => "Brand"],
+        "serving_size" => ["es" => "Tamaño de la porción", "en" => "Serving Size"],
+        "serving_unit_id" => ["es" => "Unidad de porción", "en" => "Serving Unit"],
+        "calories" => ["es" => "Calorías", "en" => "Calories"],
+        "fat" => ["es" => "Grasas", "en" => "Fat"],
+        "saturated" => ["es" => "Grasas saturadas", "en" => "Saturated"],
+        "polyunsaturated" => ["es" => "Grasas poliinsaturadas", "en" => "Polyunsaturated"],
+        "monounsaturated" => ["es" => "Grasas monoinsaturadas", "en" => "Monounsaturated"],
+        "trans" => ["es" => "Grasas trans", "en" => "Trans"],
+        "carbohydrate" => ["es" => "Carbohidratos", "en" => "Carbohydrate"],
+        "fiber" => ["es" => "Fibra", "en" => "Fiber"],
+        "sugars" => ["es" => "Azúcares", "en" => "Sugars"],
+        "sugar_alcohols" => ["es" => "Alcoholes de azúcar", "en" => "Sugar Alcohols"],
+        "protein" => ["es" => "Proteína", "en" => "Protein"],
+        "cholesterol" => ["es" => "Colesterol", "en" => "Cholesterol"],
+        "salt" => ["es" => "Sal", "en" => "Salt"],
+        "potassium" => ["es" => "Potasio", "en" => "Potassium"],
+        "sodium" => ["es" => "Sodio", "en" => "Sodium"],
+        "vitamin_a" => ["es" => "Vitamina A", "en" => "Vitamin A"],
+        "vitamin_b1" => ["es" => "Vitamina B1", "en" => "Vitamin B1"],
+        "vitamin_b2" => ["es" => "Vitamina B2", "en" => "Vitamin B2"],
+        "vitamin_b3" => ["es" => "Vitamina B3", "en" => "Vitamin B3"],
+        "vitamin_b5" => ["es" => "Vitamina B5", "en" => "Vitamin B5"],
+        "vitamin_b6" => ["es" => "Vitamina B6", "en" => "Vitamin B6"],
+        "vitamin_b11" => ["es" => "Vitamina B11", "en" => "Vitamin B11"],
+        "vitamin_b12" => ["es" => "Vitamina B12", "en" => "Vitamin B12"],
+        "vitamin_c" => ["es" => "Vitamina C", "en" => "Vitamin C"],
+        "vitamin_d" => ["es" => "Vitamina D", "en" => "Vitamin D"],
+        "vitamin_e" => ["es" => "Vitamina E", "en" => "Vitamin E"],
+        "vitamin_k" => ["es" => "Vitamina K", "en" => "Vitamin K"],
+        "calcium" => ["es" => "Calcio", "en" => "Calcium"],
+        "copper" => ["es" => "Cobre", "en" => "Copper"],
+        "iron" => ["es" => "Hierro", "en" => "Iron"],
+        "magnesium" => ["es" => "Magnesio", "en" => "Magnesium"],
+        "manganese" => ["es" => "Manganeso", "en" => "Manganese"],
+        "phosphorus" => ["es" => "Fósforo", "en" => "Phosphorus"],
+        "selenium" => ["es" => "Selenio", "en" => "Selenium"],
+        "zinc" => ["es" => "Zinc", "en" => "Zinc"],
+    ];
+
+    protected static $nutrientUnits = [
+        "fat" => "g",
+        "saturated" => "g",
+        "polyunsaturated" => "g",
+        "monounsaturated" => "g",
+        "trans" => "g",
+        "carbohydrate" => "g",
+        "fiber" => "g",
+        "sugars" => "g",
+        "sugar_alcohols" => "g",
+        "protein" => "g",
+        "cholesterol" => "mg",
+        "salt" => "g",
+        "potassium" => "mg",
+        "sodium" => "mg",
+        "vitamin_a" => "µg",
+        "vitamin_b1" => "mg",
+        "vitamin_b2" => "mg",
+        "vitamin_b3" => "mg",
+        "vitamin_b5" => "mg",
+        "vitamin_b6" => "mg",
+        "vitamin_b11" => "µg",
+        "vitamin_b12" => "µg",
+        "vitamin_c" => "mg",
+        "vitamin_d" => "µg",
+        "vitamin_e" => "mg",
+        "vitamin_k" => "µg",
+        "calcium" => "mg",
+        "copper" => "mg",
+        "iron" => "mg",
+        "magnesium" => "mg",
+        "manganese" => "mg",
+        "phosphorus" => "mg",
+        "selenium" => "µg",
+        "zinc" => "mg"
+    ];
+
+
     // Constructor
     public function __construct(array $args = [])
     {
@@ -378,5 +460,14 @@ class UserFoods extends ActiveRecord
         }
 
         return $totalCalories;
+    }
+
+    public static function getTranslations()
+    {
+        return self::$translations;
+    }
+    public static function getNutrientUnits()
+    {
+        return self::$nutrientUnits;
     }
 }
