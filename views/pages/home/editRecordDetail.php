@@ -3,14 +3,14 @@
 <?php require_once __DIR__ . "/../../partials/alerts.php"; ?>
 
 <div class="title-container">
-    <h2>Crea un nuevo registro</h2>
+    <h2>Editar registro</h2>
 </div>
 
 <?php require_once __DIR__ . "/../../partials/paginator.php"; ?>
 
 <div class="container stretched-container">
     <form
-        action="/home/new-record-detail/create?mealid=<?php echo $mealId ?? '' ?>&recordid=<?php echo $recordId ?? '' ?>&foodid=<?php echo $foodId ?? '' ?>"
+        action="/home/edit-record-detail?record_detail=<?php echo $recordDetail->id ?? '' ?>&record=<?php echo $recordId ?? '' ?>"
         method="post" id="portion-form"
         class="portion-form flex">
         <label for="portion">Porción:
@@ -27,10 +27,10 @@
             type="number"
             id="portion"
             name="portion"
-            value="<?php echo floor($userFood->serving_size); ?>" min="1" step="1" />
+            value="<?php echo floor($recordDetail->quantity ?? 0); ?>" min="1" step="1" />
         <button
             type="submit"
-            class="portion-form__btn">Agregar registro
+            class="portion-form__btn">Actualizar
         </button>
     </form>
 

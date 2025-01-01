@@ -184,18 +184,21 @@ abstract class ActiveRecord
         ];
     }
     //delete a record by its id
-    public function delete(): void
+    public function delete()
     {
         $query = "DELETE FROM " . static::$tableName . " WHERE id={$this->id} LIMIT 1";
 
         $result = self::$db->query($query);
 
-        if ($result) {
-            $this->deleteImg();
-            header("location: /admin?result=3");
-        } else {
-            header("location: /admin?result=4");
-        }
+        return [
+            "result" => $result,
+            "information" => [
+                "insert_id" => self::$db->insert_id,
+                "affected_rows" => self::$db->affected_rows,
+                "error" => self::$db->error,
+                "info" => self::$db->info
+            ]
+        ];
     }
     //form an array resembling the record in db
     public function createAttributes(): array

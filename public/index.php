@@ -65,7 +65,10 @@ $router->get(url: "/home/new-record-detail", fn: [HomeController::class, "newRec
 $router->get(url: "/home/new-record-detail/create", fn: [HomeController::class, "createRecordDetail"]);
 $router->post(url: "/home/new-record-detail/create", fn: [HomeController::class, "createRecordDetail"]);
 // edit
-
+$router->get(url: "/home/edit-record-detail", fn: [HomeController::class, "editRecordDetail"]);
+$router->post(url: "/home/edit-record-detail", fn: [HomeController::class, "editRecordDetail"]);
+// delete
+$router->post(url: "/home/delete-record-detail", fn: [HomeController::class, "dropRecordDetail"]);
 
 
 $router->verifyRoutes();

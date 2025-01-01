@@ -45,7 +45,7 @@
                                             <span class="food-item__macro carbs">c:
                                                 <?php echo escapeHTML($processedMealDetail->carbs) ?>g
                                             </span>
-                                            <span class="food-item__macro fat">f:
+                                            <span class="food-item__macro fat">g:
                                                 <?php echo escapeHTML($processedMealDetail->fat) ?>g
                                             </span>
                                         </p>
@@ -57,18 +57,18 @@
                                     <div class="options hidden">
                                         <?php
                                         $params = generateRecordParams(
-                                            $processedMealDetail->record_detail_id,
-                                            $processedMealDetail->meal_id
+                                            $processedMealDetail->record_detail_id ?? '',
+                                            $userRecordId ?? ''
                                         );
                                         ?>
-                                        <a class="option" href="/home/editRecord?<?php echo $params ?>">Editar</a>
-                                        <form action="/home/deleteRecord" method="post">
+                                        <a class="option" href="/home/edit-record-detail?<?php echo $params ?>">Editar</a>
+                                        <form action="/home/delete-record-detail" method="post">
                                             <input type="hidden"
-                                                value="<?php echo $processedMealDetail->record_detail_id ?>"
-                                                name="record_detail_id">
+                                                value="<?php echo $processedMealDetail->record_detail_id ?? '' ?>"
+                                                name="record_detail">
                                             <input type="hidden"
-                                                value="<?php echo $processedMealDetail->meal_id ?>"
-                                                name="meal_id">
+                                                value="<?php echo $userRecordId ?? '' ?>"
+                                                name="record">
                                             <input class="option" type="submit" value="Eliminar">
                                         </form>
                                     </div>

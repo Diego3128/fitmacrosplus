@@ -31,10 +31,6 @@ class UserMeals extends ActiveRecord
         $this->name = $args['name'] ?? '';
     }
 
-    // public static function bringUserMeals(){
-
-    // }
-
     public function setUserProfileId($userProfileId)
     {
         $this->user_profile_id = $userProfileId;
@@ -52,5 +48,14 @@ class UserMeals extends ActiveRecord
             $meal->setMealName($mealName);
             $meal->save();
         }
+    }
+
+    //get user meal by their ids
+    public static function fetchUserMeal($recordId, $userProfileId)
+    {
+        $query = "SELECT * FROM ";
+        $query .= self::$tableName . " WHERE user_profile_id='{$userProfileId}' AND id='{$recordId}' LIMIT 1";
+        $result = self::SQL($query);
+        return $result[0] ?? null;
     }
 }

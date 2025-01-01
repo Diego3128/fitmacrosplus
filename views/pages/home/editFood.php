@@ -7,6 +7,8 @@ require_once __DIR__ . "/../../partials/alerts.php"; ?>
         <h2 class="food-creation__title">Información nutricional</h2>
     </div>
 
+    <?php require_once __DIR__ . "/../../partials/paginator.php"; ?>
+
     <form action="" method="POST" class="food-creation__form form-body" novalidate>
 
         <?php require_once __DIR__ . "/forms/foodForm.php"; ?>

@@ -17,6 +17,7 @@ use Model\UserMealDetail;
 use Model\UserMeals;
 use Model\UserProfile;
 use Model\UserRecord;
+use Model\UserRecordDetails;
 use Model\UserRequirement;
 use MVC\Router;
 
@@ -522,8 +523,6 @@ class HomeController
         $recordId = $_GET["recordid"] ?? '';
         $foodId = $_GET["foodid"] ?? '';
 
-        // debugAndFormat($_GET);
-
         //validate ids
         if (!validateInteger($mealId) || !validateInteger($recordId) || !validateInteger($foodId)) redirectTo("/home");
 
@@ -533,7 +532,7 @@ class HomeController
         //redirect invalid food
         if (!$userFood) redirectTo("/home");
 
-        // attributes translations 
+        // attribute translations 
         $translations = UserFoods::getTranslations();
         // nutrient unit formats
         $nutrientUnits = UserFoods::getNutrientUnits();
@@ -546,13 +545,40 @@ class HomeController
 
         $units = Units::all();
 
+        $portion = null;
+
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            debugAndFormat($_POST);
+            $portion = $_POST["portion"] ?? '';
+            //  create a record_detail with the original food serving size
+            if (isset($_POST["original_size"]))  $portion = $userFood->serving_size;
+            // validate number
+            $recordDetail = new UserRecordDetails();
+            $recordDetail->setRecordQuantity($portion);
+            $alerts = $recordDetail->validatePortion();
 
-            debugAndFormat($_POST["original_size"]);
 
-            //  A $POST["original_size"] create a record_detail with the original food serving size
-            // other wize read the ["portion"] and calc the proportions
+            if (empty($alerts)) {
+                try {
+                    //validate userRecord //validate userMeal
+                    $userRecord = UserRecord::fetchUserRecord($recordId, $userProfile->id);
+                    $userMeal = UserMeals::fetchUserMeal($mealId, $userProfile->id);
+                    if (!$userRecord || !$userMeal) redirectTo("/home");
+                    //save recordDetail
+                    $recordDetail->setUserFoodId($userFood->id);
+                    $recordDetail->setUserRecordId($userRecord->id);
+                    $recordDetail->setMealId($userMeal->id);
+
+                    $result = $recordDetail->save();
+
+                    if ($result["result"]) {
+                        redirectTo("/home" . "?date=" . $userRecord->date);
+                    } else {
+                        $alerts = UserRecordDetails::setAlert("error", "No se pudo crear el registro");
+                    }
+                } catch (Exception $e) {
+                    $alerts = UserRecordDetails::setAlert("error", "No se pudo crear el registro");
+                }
+            }
         }
 
         $data = [
@@ -566,8 +592,120 @@ class HomeController
             "foodId" => $foodId
         ];
 
-        // debugAndFormat($data);
-
         $router->render('pages/home/createRecordDetail', $data);
+    }
+
+    //create a new record_detail //endpoint: /home/edit-record-detail?recordid=id&recorddetailid=id
+    public static function editRecordDetail(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $recordId = $_GET["record"] ?? '';
+        $recordDetailId = $_GET["record_detail"] ?? '';
+
+        //validate ids
+        if (!validateInteger($recordId) || !validateInteger($recordDetailId)) redirectTo("/home");
+
+        // validate existence of the record detail and that belongs to the user
+        $recordDetail = UserRecordDetails::fetchRecordDetail($recordDetailId, $recordId, $userProfile->id);
+        if (!$recordDetail) redirectTo("/home");
+
+        // food related to the record detail
+        $userFood = UserFoods::fetchUserFood($userProfile->id, $recordDetail->user_food_id);
+        if (!$userFood) redirectTo("/home");
+
+        // measurement units
+        $units = Units::all();
+
+        // attribute translations 
+        $translations = UserFoods::getTranslations();
+        // nutrient unit formats
+        $nutrientUnits = UserFoods::getNutrientUnits();
+
+        //possible alerts updating the record detail
+        $alerts = [];
+
+        $portion = $recordDetail->quantity;
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            //synch record detail
+            $portion = $_POST["portion"] ?? $recordDetail->quantity;
+            $recordDetail->setRecordQuantity($portion);
+            $alerts = $recordDetail->validatePortion();
+
+            if (empty($alerts)) {
+                try {
+                    //update recordDetail
+                    $userRecord = UserRecord::fetchUserRecord($recordId, $userProfile->id);
+                    $result = $recordDetail->save();
+
+                    if ($result["result"]) {
+                        redirectTo("/home" . "?date=" . $userRecord->date);
+                    } else {
+                        $alerts = UserRecordDetails::setAlert("error", "No se pudo actualizar el registro");
+                    }
+                } catch (Exception $e) {
+                    debugAndFormat($e);
+                    $alerts = UserRecordDetails::setAlert("error", "No se pudo actualizar el registro");
+                }
+            }
+        }
+
+        $data = [
+            "userFood" => $userFood,
+            "translations" => $translations,
+            "units" => $units,
+            "alerts" => $alerts,
+            "nutrientUnits" => $nutrientUnits,
+            "recordId" => $recordId,
+            "recordDetail" => $recordDetail
+        ];
+
+        // debugAndFormat($recordDetail);
+
+        $router->render('pages/home/editRecordDetail', $data);
+    }
+    //delete a new record_detail //endpoint: /home/delete-record-detail
+    public static function dropRecordDetail()
+    {
+        //authenticate user
+        isAuth();
+        $userId = $_SESSION["id"] ?? '';
+        // validate user
+        $userProfile = UserProfile::where("user_id", $userId);
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $recordId = $_POST["record"] ?? '';
+            $recordDetailId = $_POST["record_detail"] ?? '';
+
+            //validate ids
+            if (!validateInteger($recordId) || !validateInteger($recordDetailId)) redirectTo("/home");
+
+            // validate existence of the record detail and that belongs to the user
+            $recordDetail = UserRecordDetails::fetchRecordDetail($recordDetailId, $recordId, $userProfile->id);
+            if (!$recordDetail) redirectTo("/home");
+
+            try {
+                //delete recordDetail
+                $result = $recordDetail->delete();
+
+                if ($result["result"]) {
+                    $userRecord = UserRecord::fetchUserRecord($recordId, $userProfile->id);
+                    redirectTo("/home" . "?date=" . $userRecord->date);
+                } else {
+                    redirectTo("/home");
+                }
+            } catch (Exception $e) {
+                redirectTo("/home");
+            }
+        }
     }
 }

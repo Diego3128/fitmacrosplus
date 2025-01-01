@@ -7,7 +7,7 @@
 <?php require_once __DIR__ . "/../../partials/paginator.php"; ?>
 
 <!-- create a functional componente for the food list -->
-<div class="meal-summary stretched-container">
+<div class="meal-summary stretched-container side-margin">
     <div class="meal-summary__group">
         <!-- list of food items -->
         <ul class="meal-summary__list">
@@ -32,7 +32,7 @@
                             <p class="food-item__macros">
                                 <span class="food-item__macro protein">p: <?php echo escapeHTML($userFood->protein); ?>g</span>
                                 <span class="food-item__macro carbs">c: <?php echo escapeHTML($userFood->carbohydrate); ?>g</span>
-                                <span class="food-item__macro fat">f: <?php echo escapeHTML($userFood->fat); ?>g</span>
+                                <span class="food-item__macro fat">g: <?php echo escapeHTML($userFood->fat); ?>g</span>
                             </p>
                         </div>
                     </div>
@@ -40,10 +40,8 @@
                     <div class="flex-item flex-item--options">
                         <button class="options-toggle">...</button>
                         <div class="options hidden">
-                            <form action="/home/new-record-detail/create" method="post">
-                                <input type="hidden" value="<?php echo $mealId ?? '' ?>" name="mealid">
-                                <input type="hidden" value="<?php echo $recordId ?? '' ?>" name="recordid">
-                                <input type="hidden" value="<?php echo $userFood->id ?>" name="foodid">
+                            <form
+                                action="/home/new-record-detail/create?mealid=<?php echo $mealId ?? '' ?>&recordid=<?php echo $recordId ?? '' ?>&foodid=<?php echo $userFood->id ?>" method="post">
                                 <input type="hidden" value="1" name="original_size">
                                 <input class="option" type="submit" value="Agregar">
                             </form>

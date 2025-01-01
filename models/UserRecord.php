@@ -40,7 +40,7 @@ class UserRecord extends ActiveRecord
         $this->date = $date;
     }
 
-    //set user profile id
+    //get userRecord by date
     public static function getUserRecord($userProfileId, $date)
     {
         $query = "SELECT * FROM ";
@@ -48,5 +48,14 @@ class UserRecord extends ActiveRecord
         $query .= " AND date='{$date}' LIMIT 1";
         $result = self::SQL($query);
         return $result[0] ?? [];
+    }
+
+    //get userRecord by id
+    public static function fetchUserRecord($recordId, $userProfileId)
+    {
+        $query = "SELECT * FROM ";
+        $query .= self::$tableName . " WHERE user_profile_id='{$userProfileId}' AND id='{$recordId}' LIMIT 1";
+        $result = self::SQL($query);
+        return $result[0] ?? null;
     }
 }

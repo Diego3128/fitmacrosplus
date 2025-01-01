@@ -52,9 +52,9 @@ function validateDate(string $date): bool
     return checkdate($month, $day, $year);
 }
 //create record params
-function generateRecordParams($recordId, $mealId)
+function generateRecordParams($recordDetailId, $recordId)
 {
-    return "record_detail_id={$recordId}&mealid={$mealId}";
+    return "record_detail={$recordDetailId}&record={$recordId}";
 }
 
 //check if the user is an admin
