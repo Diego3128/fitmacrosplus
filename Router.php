@@ -40,9 +40,7 @@ class Router
             //the instace of Router is sent to the method of the controller
             call_user_func($fn, $this);
         } else {
-            //TO DO:
-            //CREATE 404 view.
-            echo ("<h1>404</h1>");
+            $this->render("errors/404");
         }
     }
     //Render a view from the controller

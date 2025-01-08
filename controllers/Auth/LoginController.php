@@ -47,6 +47,8 @@ class LoginController
                             header("location: /admin");
                             exit;
                         }
+                    } else {
+                        http_response_code(401);
                     }
                     //
                 } else {
@@ -54,7 +56,11 @@ class LoginController
                     $user = $auth;
                     //set the alert
                     $alerts = User::setAlert("error", "El usuario no existe");
+                    http_response_code(401);
                 }
+            } else {
+                // fail validation
+                http_response_code(400);
             }
         }
 
@@ -94,7 +100,7 @@ class LoginController
             ///validateInputs() returns possible errors
             $alerts = $user->validateInputs();
 
-            // validate existing email if there's no errors
+            // validate existing email if there're no errors
             if (empty($alerts)) {
                 // userExists() validates if the email already exists
                 $user->userExists();
@@ -120,23 +126,33 @@ class LoginController
                                 if ($user->save()["result"]) {
                                     //redirecto to /message?email=useremail
                                     header("location: /message?email=" . $user->email);
+                                    exit;
                                 } else {
                                     //error saving in db
                                     $alerts = User::setAlert("error", "Error creando la cuenta");
+                                    http_response_code(500);
                                 }
                             } catch (Exception $e) {
                                 //error saving in db
                                 $alerts = User::setAlert("error", "Error creando la cuenta");
+                                http_response_code(500);
                             }
                         } else {
                             //error sending email
                             $alerts = User::setAlert("error", "Error enviando el email de confirmación. Asegurate de usar un email valido o intenta mas tarde");
+                            http_response_code(500);
                         }
                     } catch (Exception $e) {
                         //error sending email
                         $alerts = User::setAlert("error", "Error enviando el email de confirmación. Asegurate de usar un email valido o intenta mas tarde");
                     }
+                } else {
+                    // the resource already exists
+                    http_response_code(409);
                 }
+            } else {
+                // error during form validation
+                http_response_code(400);
             }
         }
 
@@ -196,6 +212,7 @@ class LoginController
             $email = $user->email;
         } else {
             $errorMessage = getErrorMessage(5);
+            http_response_code(400);
         }
 
         $data = [

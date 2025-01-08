@@ -50,12 +50,25 @@ class UserRecord extends ActiveRecord
         return $result[0] ?? [];
     }
 
-    //get userRecord by id
+    //get a sigle userRecord by id
     public static function fetchUserRecord($recordId, $userProfileId)
     {
         $query = "SELECT * FROM ";
         $query .= self::$tableName . " WHERE user_profile_id='{$userProfileId}' AND id='{$recordId}' LIMIT 1";
         $result = self::SQL($query);
         return $result[0] ?? null;
+    }
+    public static function fetchUserRecordByDate($user_profile_id, $month = null, $year = null)
+    {
+        if (!$month) $month = date('m');
+        if (!$year) $year = date('Y');
+        // validate date
+
+        $query = "SELECT * FROM user_records WHERE user_profile_id='{$user_profile_id}' ";
+        $query .= "AND MONTH(date) ='{$month}' AND YEAR(date)='{$year}'";
+
+
+        $result = self::SQL($query);
+        return $result ?? null;
     }
 }

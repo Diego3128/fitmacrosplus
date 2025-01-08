@@ -4,7 +4,7 @@
 // alerts container
 .alerts-container {
   position: fixed;
-  top: 10px;
+  bottom: 30px;
   right: 10px;
   z-index: 110; // over the navbar
   width: calc(100% - 20px);

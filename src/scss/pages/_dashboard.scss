@@ -36,6 +36,8 @@
   }
 
   .card--todays-meals{
+    max-height: 32rem;
+    overflow-y: scroll;
     @include m.respond-to('tablet') {
       display: none;
     }
@@ -164,7 +166,7 @@
     justify-content: space-between;
     margin-bottom: 1.2rem;
     min-height: 3rem;
-    background-color: v.$color-gray;
+    background-color: #ececec;
     border-radius: .8rem;
     padding: 1rem .6rem;
   }
@@ -172,6 +174,7 @@
   .meal-list__icon {
     font-size: 1.25rem;
     margin-right: 0.5rem;
+    background-image: url(/build/img/icons/mealtime.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -181,17 +184,6 @@
 
   }
 
-.meal-list__icon--breakfast{
-    background-image: url(/build/img/icons/breakfast.svg);
-}
-.meal-list__icon--lunch{
-    background-image: url(/build/img/icons/lunch.svg);
-}
-
-.meal-list__icon--dinner{
-    background-image: url(/build/img/icons/dinner.svg);
-}
-  
 .card__content--placeholder {
     text-align: center;
     font-style: italic;

@@ -6,7 +6,9 @@
     <h2>Crea un nuevo registro</h2>
 </div>
 
-<?php require_once __DIR__ . "/../../partials/paginator.php"; ?>
+<?php
+require_once __DIR__ . "/../../partials/paginator.php";
+?>
 
 <div class="container stretched-container">
     <form

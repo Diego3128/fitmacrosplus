@@ -15,8 +15,6 @@ require_once __DIR__ . "/../../partials/alerts.php"; ?>
 
         <div class="form-footer">
             <button type="submit" class="btn btn-submit"><span class="text">Actualizar</span></button>
-
-            <a href="<?php $_SERVER['HTTP_REFERER'] ?? '/home'; ?>" class="food-creation__cancel">Cancelar</a>
         </div>
 
     </form>

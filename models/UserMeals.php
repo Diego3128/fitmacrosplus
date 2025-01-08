@@ -12,7 +12,8 @@ class UserMeals extends ActiveRecord
     protected static $dbColumns = [
         'id',
         'user_profile_id',
-        'name'
+        'name',
+        'deletable'
     ];
     // Possible erros when trying to create an instance
     protected static $alerts = [];
@@ -23,12 +24,28 @@ class UserMeals extends ActiveRecord
     public $id;
     public $user_profile_id;
     public $name;
+    public $deletable;
 
     public function __construct(array $args = [])
     {
         $this->id = $args['id'] ?? null;
         $this->user_profile_id = $args['user_profile_id'] ?? '';
         $this->name = $args['name'] ?? '';
+        $this->deletable = $args['deletable'] ?? 0;
+    }
+
+    public function validate()
+    {
+        if (!$this->name || strlen($this->name) < 1)  self::$alerts["error"] = ["El nombre es obligatorio"];
+
+        if (strlen($this->name) > 50)  self::$alerts["error"] = ["El nombre es muy largo"];
+
+        return self::$alerts;
+    }
+
+    public function setDetelable()
+    {
+        $this->deletable = '1';
     }
 
     public function setUserProfileId($userProfileId)

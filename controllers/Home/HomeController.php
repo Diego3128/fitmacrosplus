@@ -7,9 +7,11 @@ namespace Controller\Home;
 use DateTime;
 use Exception;
 use Model\ActivityLevel;
+use Model\Auth\User;
 use Model\Formula;
 use Model\Gender;
 use Model\Goal;
+use Model\Settings;
 use Model\Units;
 use Model\UserFoodBasic;
 use Model\UserFoods;
@@ -148,13 +150,11 @@ class HomeController
         isAuth();
 
         $userId = $_SESSION["id"] ?? '';
+        // debugAndFormat($userId);
         // if the user already has a profile, redirect
         $userProfile = UserProfile::where("user_id", $userId);
+        if ($userProfile) redirectTo("/home");
 
-        if ($userProfile) {
-            header("location: /home");
-            exit;
-        }
         //create new instance of UserProfile
         $userProfile = new UserProfile();
 
@@ -168,7 +168,8 @@ class HomeController
         //save profile
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //init instance of UserProfile
-            $userProfile = new UserProfile($_POST["user"] ?? []);
+            $data = $_POST["user"] ?? [];
+            $userProfile->synchronize($data);
             try {
                 //valiate instance
                 $alerts = $userProfile->validate();
@@ -181,8 +182,6 @@ class HomeController
                     $formula = Formula::where('gender_id', $userProfile->gender_id);
                     $userProfile->setFormulaId($formula->id);
 
-                    // debugAndFormat($userProfile);
-
                     //save user profile
                     $result = $userProfile->save();
 
@@ -191,25 +190,29 @@ class HomeController
                         //save requirements
                         $userRequirement = new UserRequirement();
                         //set the insert id to the userRequirement->setProfileId
-                        $insertId = $result["information"]["insert_id"];
-                        $userRequirement->setUserProfileId($insertId);
+                        $insertUserProfileId = $result["information"]["insert_id"];
+                        $userRequirement->setUserProfileId($insertUserProfileId);
                         //calculate requirements
                         $userRequirement->calculateRequirements($userProfile);
                         //save requirements
                         $userRequirement->save();
-                        //lastly, save its default meals // also referencing the id of the created userProfile
+                        //lastly, save its default meals referencing the id of the created userProfile
                         $userMeals = new UserMeals;
-                        $userMeals->setUserProfileId($insertId);
+                        $userMeals->setUserProfileId($insertUserProfileId);
                         //save meals 
                         $userMeals->saveDefaultMeals();
                         // //redirect
-                        header("location: /home");
+                        redirectTo("/home");
                     } else {
                         UserProfile::setAlert("error", "Algo salio mal, intenta mas tarde");
                     }
+                } else {
+                    // error during form validation
+                    http_response_code(400);
                 }
             } catch (\Exception $e) {
                 UserProfile::setAlert("error", "Algo salio mal, intenta mas tarde");
+                http_response_code(500);
             }
         }
 
@@ -706,6 +709,290 @@ class HomeController
             } catch (Exception $e) {
                 redirectTo("/home");
             }
+        }
+    }
+    //settings// endpoint: /home/settings
+    public static function settings(Router $router)
+    {
+        //authenticate user
+        isAuth();
+        $userId = $_SESSION["id"] ?? '';
+        // validate user
+        $userProfile = UserProfile::where("user_id", $userId);
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $basicSettings = Settings::fetchBasicSettings($userProfile->id);
+        $mealList = UserMeals::findAllByColumn("user_profile_id", $userProfile->id);
+
+        if (!$basicSettings || !$mealList) redirectTo("/home");
+
+
+        $data = [
+            "basicSettings" => $basicSettings,
+            "mealList" => $mealList,
+        ];
+
+        $router->render('pages/home/sections/settings/settings', $data);
+    }
+
+    //crud meal
+
+    //create a new meal //endpoint: '/home/create-meal'
+    public static function createMeal(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        //empty userMeal instance
+        $userMeal = new UserMeals();
+        //possible alerts
+        $alerts = [];
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            // sync object in memory with data from the form
+            $args = $_POST["meal"] ?? [];
+            $userMeal->synchronize($args);
+
+            $alerts = $userMeal->validate();
+
+            if (empty($alerts)) {
+                //set delete to 1
+                $userMeal->setDetelable();
+                $userMeal->setUserProfileId($userProfile->id);
+
+                try {
+                    //save food
+                    if ($userMeal->save()["result"]) {
+                        redirectTo("/home/settings");
+                    } else {
+                        //error saving in db
+                        UserMeals::setAlert("error", "No se pudo crear la comida");
+                    }
+                } catch (Exception $e) {
+                    UserMeals::setAlert("error", "No se pudo crear la comida");
+                }
+            }
+        }
+
+        $alerts = UserMeals::getAlerts();
+
+        $data = [
+            "alerts" => $alerts,
+            "userMeal" => $userMeal
+        ];
+
+        $router->render('pages/home/sections/settings/createMeal', $data);
+    }
+
+    //update meal //endpoint: '/home/create-meal'
+    public static function editMeal(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $mealId = $_GET["meal"];
+
+        if (!validateInteger($mealId)) redirectTo("/home/settings");
+
+        //bring meal
+        $userMeal = UserMeals::fetchUserMeal($mealId, $userProfile->id);
+        //possible alerts
+        $alerts = [];
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            // sync object in memory with data from the form
+            $args = $_POST["meal"] ?? [];
+            $userMeal->synchronize($args);
+
+            $alerts = $userMeal->validate();
+
+            if (empty($alerts)) {
+                try {
+                    //save food
+                    if ($userMeal->save()["result"]) {
+                        redirectTo("/home/settings");
+                    } else {
+                        //error saving in db
+                        UserMeals::setAlert("error", "No se pudo actualizar la comida");
+                    }
+                } catch (Exception $e) {
+                    UserMeals::setAlert("error", "No se pudo actualizar la comida");
+                }
+            }
+        }
+
+        $alerts = UserMeals::getAlerts();
+
+        $data = [
+            "alerts" => $alerts,
+            "userMeal" => $userMeal,
+            "previousUrl" => "/home/settings"
+        ];
+
+        $router->render('pages/home/sections/settings/createMeal', $data);
+    }
+
+    //delete meal //endpoint: '/home/create-meal'
+    public static function dropMeal()
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        try {
+            $userProfile = UserProfile::where("user_id", $userId);
+
+            if (!$userProfile) redirectTo("/home/set-profile");
+
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                // sync object in memory with data from the form
+                $mealId = $_POST["meal"] ?? [];
+
+                if (!validateInteger($mealId)) redirectTo("/home/settings");
+
+                $userMeal = UserMeals::fetchUserMeal($mealId, $userProfile->id);
+
+                if (!$userMeal) redirectTo("/home/settings");
+
+                if ($userMeal->deletable === '1') {
+                    try {
+                        //save food
+                        if ($userMeal->delete()["result"]) {
+                            redirectTo("/home/settings");
+                        } else {
+                            //error saving in db
+                            redirectTo("/home/settings");
+                        }
+                    } catch (Exception $e) {
+                        redirectTo("/home/settings");
+                    }
+                }
+                redirectTo("/home/settings");
+            }
+        } catch (Exception $e) {
+            redirectTo("/home");
+        }
+    }
+
+    // get all records
+    public static function getRecords(Router $router)
+    {
+        //authenticate user
+        isAuth();
+
+        $userId = $_SESSION["id"] ?? '';
+
+        $userProfile = UserProfile::where("user_id", $userId);
+
+        if (!$userProfile) redirectTo("/home/set-profile");
+
+        $month = $_GET["month"] ?? date("m");
+        $year = $_GET["year"] ?? date("Y");
+
+        if (!validateDate($year . "-" . $month . "-" . date('d'))) redirectTo("/home/settings");
+
+        //bring all records (by month)
+        $userRecords = UserRecord::fetchUserRecordByDate($userProfile->id, $month, $year) ?? [];
+
+        $alerts = [];
+
+        if (empty($userRecords)) $alerts = UserRecord::setAlert("warning", "No existen registros para esta fecha");
+
+
+        $date = $year . "-" . $month;
+
+        $data = [
+            "alerts" => $alerts,
+            "userRecords" => $userRecords,
+            "previousUrl" => "/home/settings",
+            "date" =>  $date,
+            "year" => $year,
+            "month" => $month
+        ];
+
+        $router->render('pages/home/sections/settings/userRecords', $data);
+    }
+
+    // delete a record by its id
+    public static function dropRecord()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] !== "POST") redirectTo("/home");
+
+            //authenticate user
+            isAuth();
+
+            $userId = $_SESSION["id"] ?? '';
+
+            $userProfile = UserProfile::where("user_id", $userId);
+
+
+            if (!$userProfile) redirectTo("/home/set-profile");
+            // get record id
+            $recordId = $_POST["record"] ?? 0;
+
+            if (!validateInteger($recordId)) redirectTo("/home");
+            // bring user record
+            $userRecord = UserRecord::fetchUserRecord($recordId, $userProfile->id);
+
+            // drop record
+            if (!$userRecord) redirectTo("/home/settings");
+
+            $date = explode("-", $userRecord->date);
+            $date = "month={$date[1]}&year={$date[0]}";
+
+            $result = $userRecord->delete()["result"] ?? null;
+
+            if ($result) redirectTo("/home/records?{$date}");
+
+            redirectTo("/home/settings");
+        } catch (Exception $e) {
+            redirectTo("/home");
+        }
+    }
+
+    // delete user account
+    public static function dropAccount()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                //authenticate user
+                if (!isset($_SESSION["loggedin"])) {
+                    header('Content-Type: application/json');
+                    http_response_code(401); // NOT AUTHORIZED
+                    echo json_encode(["error" => "Usuario no autenticado"]);
+                    exit;
+                }
+
+                $userId = $_SESSION["id"] ?? '';
+
+                $userAccount = User::findById($userId);
+
+                $result = $userAccount->delete()["result"];
+
+                http_response_code(204); // removed but not response
+
+                header('Content-Type: application/json');
+                echo json_encode(["result" => $result]);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            http_response_code(500);
+            echo json_encode(["error" => "error"]);
+            exit;
         }
     }
 }

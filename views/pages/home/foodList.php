@@ -4,7 +4,10 @@
     <h2>Elige tus alimentos</h2>
 </div>
 
-<?php require_once __DIR__ . "/../../partials/paginator.php"; ?>
+<?php
+$newFood = true;
+
+require_once __DIR__ . "/../../partials/paginator.php"; ?>
 
 <!-- create a functional componente for the food list -->
 <div class="meal-summary stretched-container side-margin">

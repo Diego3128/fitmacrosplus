@@ -62,7 +62,7 @@ function isAdmin(): void
 {
     isAuth();
 
-    if (!isset($_SESSION["admin"])) header("location: /appointment");
+    if (!isset($_SESSION["admin"])) header("location: /home");
 }
 //redirect to a ceartain endpoint
 function redirectTo($path)

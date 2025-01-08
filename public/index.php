@@ -70,5 +70,25 @@ $router->post(url: "/home/edit-record-detail", fn: [HomeController::class, "edit
 // delete
 $router->post(url: "/home/delete-record-detail", fn: [HomeController::class, "dropRecordDetail"]);
 
+//settings area
+$router->get(url: "/home/settings", fn: [HomeController::class, "settings"]);
+
+//meal crud
+//create
+$router->get(url: "/home/create-meal", fn: [HomeController::class, "createMeal"]);
+$router->post(url: "/home/create-meal", fn: [HomeController::class, "createMeal"]);
+//edit
+$router->get(url: "/home/edit-meal", fn: [HomeController::class, "editMeal"]);
+$router->post(url: "/home/edit-meal", fn: [HomeController::class, "editMeal"]);
+// drop
+$router->post(url: "/home/delete-meal", fn: [HomeController::class, "dropMeal"]);
+
+// Get record by month
+$router->get(url: "/home/records", fn: [HomeController::class, "getRecords"]);
+$router->post(url: "/home/delete-record", fn: [HomeController::class, "dropRecord"]);
+
+// delete an account
+$router->post(url: "/home/delete-account", fn: [HomeController::class, "dropAccount"]);
+
 
 $router->verifyRoutes();
