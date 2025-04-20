@@ -223,6 +223,7 @@ class LoginController
         //send view
         $router->render("auth/validate", $data);
     }
+    // generate token to recover a password
     public static function fortgotPassword(Router $router)
     {
         $user = new User;
@@ -240,7 +241,7 @@ class LoginController
             $alerts = User::getAlerts();
 
             if (empty($alerts)) {
-                //find the user in the database by their email //uhere return null
+                //find the user in the database by their email //where returns null
                 $user = User::where("email", $auth->email);
 
                 if ($user and $user->verified == "1") {
