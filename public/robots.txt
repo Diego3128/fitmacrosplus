@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin
+Disallow: /dashboard
+Disallow: //message
+Disallow: /validate-account
+Disallow: //password/request
+Disallow: //password/reset
+Allow: /
+
+Sitemap: https://fitmacrosplus.com/sitemap.xml
