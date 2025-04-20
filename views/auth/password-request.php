@@ -11,27 +11,33 @@
     <div class="form-header">
         <h2>Restablece tu contraseña en Fitmacros+</h2>
     </div>
+    <?php if (!$hideForm) { ?>
+        <form action="/password/request" method="post" class="form-body">
 
-    <form action="/password/request" method="post" class="form-body">
+            <label for="email">Correo Electrónico</label>
+            <input
+                type="email"
+                id="email"
+                name="user[email]"
+                value="<?php echo escapeHTML($user->email); ?>"
+                placeholder="Ingresa tu correo electrónico"
+                required
+                maxlength="80">
 
-        <label for="email">Correo Electrónico</label>
-        <input
-            type="email"
-            id="email"
-            name="user[email]"
-            value="<?php echo escapeHTML($user->email); ?>"
-            placeholder="Ingresa tu correo electrónico"
-            required
-            maxlength="80">
+            <div class="form-footer">
+                <button type="submit" class="btn btn-submit"><span class="text">Restablecer</span></button>
+            </div>
 
-        <div class="form-footer">
-            <button type="submit" class="btn btn-submit"><span class="text">Restablecer</span></button>
-        </div>
+            <div class="form-options">
+                <a href="/">Inicio</a>
+            </div>
+        </form>
+    <?php
+    } else { ?>
+        <div class="empty-container" id="redirect-home"></div>
+    <?php
+    } ?>
 
-        <div class="form-options">
-            <a href="/">Inicio</a>
-        </div>
-    </form>
 
     <!-- footer -->
     <?php include_once __DIR__ . "/../partials/footer.php"; ?>

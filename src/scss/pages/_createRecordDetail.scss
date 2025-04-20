@@ -52,7 +52,7 @@
     }
 }
 .food-details-container {
-    width: min(40rem, 90%);
+    width: min(60rem, 90%);
     padding: 5rem 2rem;
     margin: 3rem auto;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.156);
@@ -62,18 +62,21 @@
 
 .food-detail{
     justify-content: space-between;
+    align-items: end;
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
 
     .food-detail__name{
         overflow: hidden;
-        height: 2.5rem;
+    }
+    @include m.respond-to('tablet'){
+        font-size: 1.6rem;
     }
 }
 
 .food-detail_value{
-        width: 35%;
+        width: 45%;
         margin: 0;
-        font-size: inherit;
-        height: 2.5rem;
         text-align: right;
         border-top: none;
         border-left: none;
@@ -82,4 +85,12 @@
         border-radius: 0%;
         background-color: transparent;
         padding: 0;
+}
+
+// overflow adaptation
+.food-detail__name, .food-detail_value {
+    height: fit-content;
+    max-height: 6.5rem;
+    overflow: hidden;
+    margin-bottom: 0;
 }

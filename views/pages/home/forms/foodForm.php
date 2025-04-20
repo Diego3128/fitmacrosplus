@@ -10,7 +10,7 @@
 
     <div class="food-creation__field flex">
         <label for="food-brand" class="food-creation__label">Marca</label>
-        <input maxlength="50" required type="text" id="food-brand" name="food[brand]" class="food-creation__input brand" placeholder="opcional"
+        <input maxlength="50"  type="text" id="food-brand" name="food[brand]" class="food-creation__input brand" placeholder="opcional"
             value="<?php echo escapeHTML($userFood->brand); ?>">
     </div>
 

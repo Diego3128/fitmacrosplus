@@ -229,6 +229,8 @@ class LoginController
 
         $alerts = [];
 
+        $hideForm = false;
+
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //create a object with the password
             $auth = new User($_POST["user"] ?? []);
@@ -253,6 +255,7 @@ class LoginController
                             $email = new Email($user->email, $user->name, $user->token);
                             if ($email->sendInstructions()) {
                                 User::setAlert("success", "Revisa tu correo electrónico " . $user->email);
+                                $hideForm = true;
                             } else {
                                 User::setAlert("error", "Error enviando el correo de recuperación, inténtalo más tarde");
                             }
@@ -274,7 +277,8 @@ class LoginController
 
         $data = [
             "user" => $user,
-            "alerts" => $alerts
+            "alerts" => $alerts,
+            "hideForm" => $hideForm
         ];
 
 
