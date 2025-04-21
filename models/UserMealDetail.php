@@ -55,7 +55,7 @@ class UserMealDetail extends ActiveRecord
         $this->meal_name = $args['meal_name'] ?? '';
         $this->date = $args['date'] ?? '';
         $this->record_id = $args['record_id'] ?? '';
-        $this->record__detail_id = $args['record__detail_id'] ?? '';
+        $this->record_detail_id = $args['record__detail_id'] ?? '';
         $this->food = $args['food'] ?? '';
         $this->protein = $args['protein'] ?? '';
         $this->carbs = $args['carbs'] ?? '';
@@ -107,7 +107,8 @@ class UserMealDetail extends ActiveRecord
         if ($value === null || $originalServingSize === 0) {
             return null; // Prevent division by zero or calculate for invalid values.
         }
-        return ($value * $consumedQuantity) / $originalServingSize;
+        return round(($value * $consumedQuantity) / $originalServingSize, 1);
+        //returns a float with 1 decimal places
     }
 
     /**
@@ -143,6 +144,7 @@ class UserMealDetail extends ActiveRecord
                     (float) $mealDetail->consumed_quantity,
                     (float) $mealDetail->original_serving_size
                 );
+                // debugAndFormat($mealDetail);
             }
         }
         return $mealDetails;
